@@ -2,48 +2,99 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     background-color: #f5f5f7;
     color: #1d1d1f;
 }
 
-.container {
+/* 顶部导航栏样式 */
+.navbar {
+    background-color: #0070c9;
+    padding: 10px 0;
     text-align: center;
-    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul li {
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #005bb5; /* 悬停时的颜色 */
+}
+
+.container {
+    max-width: 60%; /* 设置内容宽度为60% */
+    margin: 20px auto; /* 添加上边距避免紧贴导航栏 */
+    padding: 20px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 控制左右之间的间距 */
+}
+
+.profile-photo {
+    flex: 0 0 150px; /* 固定宽度 */
+}
+
+.profile-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #1d1d1f;
+}
+
+.profile-info {
+    flex: 1; /* 使信息部分占据剩余空间 */
+}
+
+/* 包裹posts-list内容的浅蓝色边框 */
+.posts-list {
+    border: 2px solid #8cb1da; /* 浅蓝色边框 */
+    border-radius: 8px; /* 圆角 */
+    padding: 20px;
+    background-color: #ffffff; /* 背景颜色为白色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微的阴影效果 */
+    margin-top: 20px;
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.5em;
     font-weight: 600;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
+    color: #1d1d1f;
 }
 
 p {
     font-size: 1.25em;
     line-height: 1.6;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
+    color: #333;
 }
 
 a {
-    display: inline-block;
-    background-color: #0070c9;
-    color: white;
-    padding: 0.75em 2em;
-    border-radius: 8px;
     text-decoration: none;
     font-size: 1.1em;
-    transition: background-color 0.3s;
+    transition: color 0.3s;
 }
 
 a:hover {
-    background-color: #005bb5;
-}
-
-footer {
-    margin-top: 3em;
-    font-size: 0.9em;
-    color: #6e6e73;
+    color: #005bb5; /* 鼠标悬停时颜色变深 */
 }
