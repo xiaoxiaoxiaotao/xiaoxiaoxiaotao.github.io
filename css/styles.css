@@ -20,6 +20,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap; /* 允许导航菜单在小屏幕上换行 */
 }
 
 .navbar ul li {
@@ -38,7 +39,8 @@ body {
 }
 
 .container {
-    max-width: 60%; /* 设置内容宽度为60% */
+    max-width: 100%; /* 适配小屏幕 */
+    width: 70%; 
     margin: 20px auto; /* 添加上边距避免紧贴导航栏 */
     padding: 20px;
 }
@@ -46,7 +48,8 @@ body {
 .profile-section {
     display: flex;
     align-items: center;
-    gap: 20px; /* 控制左右之间的间距 */
+    gap: 60px; /* 控制左右之间的间距 */
+    flex-direction: row; /* 在大屏幕上水平排列 */
 }
 
 .profile-photo {
@@ -63,6 +66,7 @@ body {
 
 .profile-info {
     flex: 1; /* 使信息部分占据剩余空间 */
+    text-align: left; /* 居中对齐 */
 }
 
 /* 包裹posts-list内容的浅蓝色边框 */
@@ -97,4 +101,34 @@ a {
 
 a:hover {
     color: #005bb5; /* 鼠标悬停时颜色变深 */
+}
+
+/* 针对手机设备的样式 */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 2em; /* 缩小标题字号 */
+    }
+
+    .container {
+        width: 90%; /* 在小屏幕上扩大内容宽度 */
+    }
+
+    .profile-section {
+        flex-direction: column; /* 垂直排列照片和信息 */
+        align-items: center; /* 居中对齐 */
+        gap: 10px;
+    }
+
+    .posts-list {
+        padding: 15px; /* 在小屏幕上减少内边距 */
+        margin-top: 15px;
+    }
+
+    p {
+        font-size: 1.1em; /* 缩小段落文字字号 */
+    }
+
+    a {
+        font-size: 1em; /* 缩小链接文字字号 */
+    }
 }

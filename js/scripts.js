@@ -1,44 +1,79 @@
-// 使用 JavaScript 动态加载导航栏
+// 初始组件
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('navbar.html')
+    fetch('components/navbar.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
         });
+    navigateTo('home'); // Load home page by default on first load
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    // 定义要加载的Markdown文件列表
+
+function loadPosts() {
     const posts = [
         { title: "Example Post 1", file: "posts/example.md" },
     ];
 
-    // 获取要插入内容的容器
     const postsList = document.getElementById('posts-list');
 
-    // 遍历每个Markdown文件
     posts.forEach(post => {
         fetch(post.file)
             .then(response => response.text())
             .then(markdown => {
-                // 使用 marked.js 将 Markdown 转换为 HTML
                 const htmlContent = marked.parse(markdown);
-                
-                // 创建新的 post div
+                const firstParagraph = htmlContent.split("</p>")[0] + "</p>";
+
                 const postDiv = document.createElement('div');
                 postDiv.className = 'post';
-                
-                // 插入标题和内容摘要
                 postDiv.innerHTML = `
                     <h2>${post.title}</h2>
-                    <div class="post-content">
-                        ${htmlContent.split("\n")[0]} <!-- 显示Markdown的第1行作为摘要 -->
-                        <p><a href="${post.file}" target="_blank">Read more</a></p>
-                    </div>
+                    <div class="post-content">${firstParagraph}</div>
+                    <p><a href="${post.file}" target="_blank">Read more</a></p>
                 `;
-                
-                // 添加到postsList中
+
                 postsList.appendChild(postDiv);
+            })
+            .catch(error => {
+                console.error('Error loading Markdown file:', error);
             });
     });
-});
+}
+
+
+function navigateTo(page) {
+    let url = '';
+    switch (page) {
+        case 'home':
+            url = 'components/home.html';
+            break;
+        case 'posts':
+            url = 'components/posts.html';
+            break;
+        case 'about':
+            url = 'components/about.html';
+            break;
+        default:
+            console.log("Unknown page: " + page);
+            return;
+    }
+
+    // 使用 fetch API 请求并插入HTML内容
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            // 将请求到的HTML内容插入到页面中的某个容器
+            document.getElementById('content-placeholder').innerHTML = data;
+            // 如果是posts页面，则加载Markdown内容
+            if (page === 'posts') {
+                loadPosts();
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
