@@ -1,24 +1,100 @@
-<div class="container">
-    <!-- 左右放置的部分 -->
-    <div class="profile-section">
-        <!-- photo -->
-        <div class="profile-photo">
-            <img src="images/photo.png" alt="My Photo">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 左右放置的部分 -->
+        <div class="profile-section">
+            <!-- photo -->
+            <div class="profile-photo">
+                <img src="images/photo.jpg" alt="My Photo">
+            </div>
+            <!-- 短介绍 -->
+            <div class="profile-info">
+                <h1>About Me</h1>
+                <p>
+                    Hello! I'm Li Songtao, a passionate Communications Engineering student with a strong interest in Blockchain, Federated Learning, and Machine Learning. 
+                    I have been working on various projects involving these cutting-edge technologies.
+                </p>
+                <p>
+                    My journey began in 2022 when I started my undergraduate studies at Northeastern University. Since then, I have developed a deep expertise in areas like Integrated Circuit System Design and Mathematical Modeling.
+                    I am always excited about new challenges and love to learn and grow through my work.
+                </p>
+            </div>
         </div>
-        <!-- 短介绍 -->
-        <div class="profile-info">
-            <h1>About Me</h1>
-            <p>
-                Hello! I'm [Your Name], a passionate [Your Profession] with a strong interest in [Your Interests or Specializations]. 
-                I have been working on various projects involving [mention a few key areas or technologies you work with].
-            </p>
-            <p>
-                My journey began in [mention the year or context, e.g., "2018 when I started exploring..."]. Since then, I have developed a deep expertise in [mention key skills or areas of expertise].
-                I am always excited about new challenges and love to learn and grow through my work.
-            </p>
-            <p>
-                When I'm not working, you can find me [mention hobbies or activities you enjoy outside of work]. Feel free to explore my website to learn more about my projects and interests.
-            </p>
+
+        <!-- 简历区块 -->
+        <div class="resume-section">
+
+            <!-- 教育经历 -->
+            <div class="resume-item">
+                <h3>Educational Background</h3>
+                <p><strong>Northeastern University</strong></p>
+                <p>Bachelor of Engineering, Communications Engineering, Sydney Smart Technology College</p>
+                <p><em>July 2022 - May 2026</em></p>
+                <ul>
+                    <li>GPA: 4.3/5.0, Ranking: 1/119</li>
+                    <li>Core Courses: C++ Programming (99), Integrated Circuit System Design (98), Fundamentals of Digital Electronics (93), Fundamentals of Computer Networks (97), Mathematical Modeling (I)(96), Mathematical Modeling (II)(98)</li>
+                </ul>
+            </div>
+
+            <!-- 项目经历 -->
+            <div class="resume-item">
+                <h3>Project Experience</h3>
+
+                <h4>Federated Learning Authentication Scheme Based on Blockchain</h4>
+                <p><em>Personal Project, Qinhuangdao, February 2024 - Present</em></p>
+                <ul>
+                    <li>Designed a lightweight, anonymous solution for user authentication.</li>
+                    <li>Utilized blockchain to negotiate session keys.</li>
+                    <li>Designed a message authentication code to ensure the integrity of model data and traceability of malicious data.</li>
+                </ul>
+
+                <h4>Kaggle Project - Predict Whether Customers Will Continue to Hold Bank Cards</h4>
+                <p><em>Personal Project, Remote, January 2024</em></p>
+                <ul>
+                    <li>Predicted whether a customer of a bank will continue to hold a bank card by building a machine learning model.</li>
+                    <li>Constructed LightGBM, Random Forest, XGBoost, and CatBoost models, and fused them using Voting Classifier, achieving a ROC-AUC score of about 0.75.</li>
+                </ul>
+
+                <h4>APMCM Asia-Pacific Student Mathematical Modeling Contest (Quantum Track)</h4>
+                <p><em>Leader, Remote, November 2023</em></p>
+                <ul>
+                    <li>Developed a QUBO model by finding the objective function and discretizing it.</li>
+                    <li>Calculated the computing network layout with the lowest total cost of ownership using simulated annealing and other techniques, leading to the second prize.</li>
+                </ul>
+            </div>
+
+            <!-- 实习经历 -->
+            <div class="resume-item">
+                <h3>Internship Experience</h3>
+
+                <h4>Embedded Engineer Intern - Sichuan Zhuchuang Anquan Keji Co.</h4>
+                <p><em>Chengdu, July 2023 - August 2023</em></p>
+                <ul>
+                    <li>Applied data transmission protocols such as MODBUS and RS485 to realize data communication functions and assisted in debugging and testing communication modules.</li>
+                    <li>Participated in data analysis and troubleshooting, understanding the operation of automatic drainage and major ventilators, and assisted in daily troubleshooting.</li>
+                    <li>Realized automatic drainage of underground pumps based on water level and remote start/stop operation of surface ventilators.</li>
+                </ul>
+            </div>
+
+            <!-- 其他信息 -->
+            <div class="resume-item">
+                <h3>Additional Information</h3>
+                <ul>
+                    <li>Languages: Chinese (mother tongue), English (fluent, CET6-579)</li>
+                    <li>Technologies: Proficient in C, C++, Python; proficient in MS Office (Word, Excel, PowerPoint)</li>
+                    <li>Hobbies: Chinese chess, jogging, traveling</li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
