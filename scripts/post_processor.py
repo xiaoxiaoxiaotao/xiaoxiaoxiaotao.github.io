@@ -67,7 +67,8 @@ class PostProcessor:
                 {content}
             </div>
             <div class="post-navigation">
-                <a href="../../#" onclick="navigateTo('posts')" class="back-to-posts">← Back to Posts</a>
+                <a href="javascript:history.back()" class="back-to-posts">← Back</a>
+                <a href="../../#" onclick="navigateTo('posts')" class="back-to-home">← Back to Posts</a>
             </div>
         </article>
     </div>
@@ -102,7 +103,7 @@ class PostProcessor:
             
             post_html = f"""
             <div class="post-item">
-                <h2><a href="../posts-html/{post['id']}.html">{meta['title']}</a></h2>
+                <h2><a href="#" onclick="loadPost('{post['id']}'); return false;">{meta['title']}</a></h2>
                 <div class="post-meta">
                     <span class="post-date">{meta['date']}</span>
                     <span class="post-tags">
