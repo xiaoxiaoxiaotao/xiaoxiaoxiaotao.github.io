@@ -16,7 +16,6 @@ function toggleLoading(show) {
 // Error handling
 function handleError(error) {
     console.error('Error:', error);
-    alert('Loading failed. Please try again later.');
     toggleLoading(false);
 }
 
