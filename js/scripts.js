@@ -7,7 +7,10 @@ const state = {
 // Toggle loading state
 function toggleLoading(show) {
     state.isLoading = show;
-    document.getElementById('loading').style.display = show ? 'block' : 'none';
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+        loadingElement.style.display = show ? 'block' : 'none';
+    }
 }
 
 // Error handling
@@ -17,15 +20,33 @@ function handleError(error) {
     toggleLoading(false);
 }
 
+// Get base URL for correct path resolution
+function getBaseUrl() {
+    const currentPath = window.location.pathname;
+    return currentPath.includes('/posts-html/') ? '../' : '';
+}
+
 // Initialize components
 document.addEventListener("DOMContentLoaded", async function() {
     try {
         toggleLoading(true);
-        const response = await fetch('components/navbar.html');
+        const baseUrl = getBaseUrl();
+        const response = await fetch(baseUrl + 'components/navbar.html');
         if (!response.ok) throw new Error('Failed to load navbar');
         const data = await response.text();
         document.getElementById('navbar-placeholder').innerHTML = data;
-        await navigateTo('home');
+        
+        // Update active navigation item based on current page
+        const currentPath = window.location.pathname;
+        const pageName = currentPath.split('/').pop().replace('.html', '');
+        document.querySelectorAll('.navbar a').forEach(link => {
+            const linkPage = link.getAttribute('data-page');
+            link.classList.toggle('active', linkPage === pageName);
+        });
+
+        if (!currentPath.includes('/posts-html/')) {
+            await navigateTo('home');
+        }
     } catch (error) {
         handleError(error);
     } finally {
@@ -39,7 +60,8 @@ async function navigateTo(page) {
         toggleLoading(true);
         state.currentPage = page;
         
-        const response = await fetch(`components/${page}.html`);
+        const baseUrl = getBaseUrl();
+        const response = await fetch(baseUrl + `components/${page}.html`);
         if (!response.ok) throw new Error(`Failed to load page: ${page}`);
         const content = await response.text();
         
@@ -52,6 +74,10 @@ async function navigateTo(page) {
 
         // Update document title
         document.title = page === 'home' ? 'Songtao Li: Personal Portfolio' : `${page.charAt(0).toUpperCase() + page.slice(1)} - Songtao Li`;
+
+        // Update URL without page reload
+        const newUrl = baseUrl + `#${page}`;
+        window.history.pushState({ page }, '', newUrl);
     } catch (error) {
         handleError(error);
     } finally {

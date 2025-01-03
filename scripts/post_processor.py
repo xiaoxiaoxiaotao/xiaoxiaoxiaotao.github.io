@@ -51,6 +51,7 @@ class PostProcessor:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - Songtao Li</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../images/favicon.ico">
 </head>
 <body>
     <div id="navbar-placeholder"></div>
@@ -67,7 +68,7 @@ class PostProcessor:
                 {content}
             </div>
             <div class="post-navigation">
-                <a href="#" onclick="navigateTo('posts')" class="back-to-posts">← Back to Posts</a>
+                <a href="#" onclick="navigateTo('posts'); return false;" class="back-to-posts">← Back to Posts</a>
             </div>
         </article>
     </div>
@@ -102,7 +103,7 @@ class PostProcessor:
             
             post_html = f"""
             <div class="post-item">
-                <h2><a href="posts-html/{post['id']}.html">{meta['title']}</a></h2>
+                <h2><a href="../posts-html/{post['id']}.html">{meta['title']}</a></h2>
                 <div class="post-meta">
                     <span class="post-date">{meta['date']}</span>
                     <span class="post-tags">
