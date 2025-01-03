@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Songtao Li: Home Page</title>
+    <meta name="description" content="Songtao Li's Personal Website - Showcasing Resume, Projects, and Technical Blog">
+    <meta name="keywords" content="Songtao Li, Personal Website, Resume, Portfolio, Blog">
+    <meta name="author" content="Songtao Li">
+    <title>Songtao Li: Personal Portfolio</title>
+    <link rel="preload" href="css/styles.css" as="style">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Songtao Li",
+      "url": "http://lisongtao.eu.org",
+      "jobTitle": "Student",
+      "alumniOf": "Northeastern University (China)",
+      "sameAs": [
+        "https://github.com/xiaoxiaoxiaotao",
+        "https://www.linkedin.com/in/songtao-li-a0a757274/"
+      ]
+    }
+    </script>
 </head>
 <body>
-    <!-- 包含导航栏 -->
     <div id="navbar-placeholder"></div>
+    <div id="content-placeholder"></div>
+    <div id="loading" style="display: none;">Loading...</div>
 
-    <div id = "content-placeholder"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="js/scripts.js" defer></script>
 </body>
 </html>
