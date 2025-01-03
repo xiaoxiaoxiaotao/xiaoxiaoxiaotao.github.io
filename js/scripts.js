@@ -37,35 +37,38 @@ document.addEventListener("DOMContentLoaded", async function() {
 async function loadPosts() {
     try {
         toggleLoading(true);
-        const posts = [
-            { 
-                title: "Blockchain-based Authentication in Federated Learning",
-                file: "posts/blockchain-authentication.md",
-                date: "March 15, 2024"
-            },
-            { 
-                title: "Building an Ensemble Model for Bank Card Customer Prediction",
-                file: "posts/machine-learning-project.md",
-                date: "March 10, 2024"
-            },
-        ];
-
+        const response = await fetch('posts/posts.json');
+        if (!response.ok) throw new Error('Failed to load posts');
+        const data = await response.json();
+        
         const postsList = document.getElementById('posts-list');
         if (!postsList) return;
 
+        // Sort posts by date (newest first)
+        const posts = data.posts.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+        });
+
         for (const post of posts) {
-            const response = await fetch(post.file);
-            if (!response.ok) throw new Error(`Failed to load post: ${post.title}`);
-            const content = await response.text();
-            const html = marked.parse(content);
-            
             const article = document.createElement('article');
             article.className = 'blog-post';
-            article.innerHTML = `
+            
+            let content = `
                 <h2>${post.title}</h2>
                 <div class="post-date">${post.date}</div>
-                <div class="post-content">${html}</div>
+                <div class="post-content">
+                    <p>${post.description}</p>
+                    ${post.link ? `<p><a href="${post.link}" target="_blank">Read More →</a></p>` : ''}
+                    ${post.status ? `<p><em>${post.status}</em></p>` : ''}
+                    ${post.tags ? `
+                        <div class="tags">
+                            ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
             `;
+            
+            article.innerHTML = content;
             postsList.appendChild(article);
         }
     } catch (error) {
