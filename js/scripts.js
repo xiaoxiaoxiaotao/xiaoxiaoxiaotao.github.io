@@ -44,12 +44,11 @@ async function loadPosts() {
         const postsList = document.getElementById('posts-list');
         if (!postsList) return;
 
-        // Sort posts by date (newest first)
-        const posts = data.posts.sort((a, b) => {
-            return new Date(b.date) - new Date(a.date);
-        });
+        // Clear existing posts
+        postsList.innerHTML = '';
 
-        for (const post of posts) {
+        // Display posts
+        data.posts.forEach(post => {
             const article = document.createElement('article');
             article.className = 'blog-post';
             
@@ -70,7 +69,7 @@ async function loadPosts() {
             
             article.innerHTML = content;
             postsList.appendChild(article);
-        }
+        });
     } catch (error) {
         handleError(error);
     } finally {
@@ -90,7 +89,7 @@ async function navigateTo(page) {
         
         document.getElementById('content-placeholder').innerHTML = content;
         
-        if (page === 'blog') {
+        if (page === 'posts') {
             await loadPosts();
         }
         
