@@ -35,17 +35,29 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 // Load blog posts
 async function loadPosts() {
+    const postsList = document.getElementById('posts-list');
+    if (!postsList) {
+        console.error('Posts list container not found');
+        return;
+    }
+
     try {
         toggleLoading(true);
-        const response = await fetch('posts/posts.json');
-        if (!response.ok) throw new Error('Failed to load posts');
-        const data = await response.json();
-        
-        const postsList = document.getElementById('posts-list');
-        if (!postsList) return;
+        postsList.innerHTML = '<div class="loading-message">Loading posts...</div>';
 
-        // Clear existing posts
+        const response = await fetch('posts/posts.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // Clear loading message
         postsList.innerHTML = '';
+
+        if (!data.posts || data.posts.length === 0) {
+            postsList.innerHTML = '<div class="no-posts">No posts available.</div>';
+            return;
+        }
 
         // Display posts
         data.posts.forEach(post => {
@@ -53,13 +65,13 @@ async function loadPosts() {
             article.className = 'blog-post';
             
             let content = `
-                <h2>${post.title}</h2>
-                <div class="post-date">${post.date}</div>
+                <h2>${post.title || 'Untitled Post'}</h2>
+                ${post.date ? `<div class="post-date">${post.date}</div>` : ''}
                 <div class="post-content">
-                    <p>${post.description}</p>
-                    ${post.link ? `<p><a href="${post.link}" target="_blank">Read More →</a></p>` : ''}
+                    ${post.description ? `<p>${post.description}</p>` : ''}
+                    ${post.link ? `<p><a href="${post.link}" target="_blank" rel="noopener noreferrer">Read More →</a></p>` : ''}
                     ${post.status ? `<p><em>${post.status}</em></p>` : ''}
-                    ${post.tags ? `
+                    ${post.tags && post.tags.length > 0 ? `
                         <div class="tags">
                             ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                         </div>
@@ -71,7 +83,13 @@ async function loadPosts() {
             postsList.appendChild(article);
         });
     } catch (error) {
-        handleError(error);
+        console.error('Error loading posts:', error);
+        postsList.innerHTML = `
+            <div class="error-message">
+                Failed to load posts. Please try again later.
+                <button onclick="loadPosts()" class="retry-button">Retry</button>
+            </div>
+        `;
     } finally {
         toggleLoading(false);
     }
