@@ -1,190 +1,300 @@
+/* General Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f7;
-    color: #1d1d1f;
-}
-
-/* 顶部导航栏样式 */
-.navbar {
-    background-color: #0070c9;
-    padding: 10px 0;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; /* 允许导航菜单在小屏幕上换行 */
-}
-
-.navbar ul li {
-    margin: 0 15px;
-}
-
-.navbar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2em;
-    transition: color 0.3s;
-}
-
-.navbar ul li a:hover {
-    color: #005bb5; /* 悬停时的颜色 */
+    background-color: #f8f9fa;
 }
 
 .container {
-    max-width: 100%; /* 适配小屏幕 */
-    width: 70%; 
-    margin: 20px auto; /* 添加上边距避免紧贴导航栏 */
-    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
-.profile-section {
+/* Navigation */
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    align-items: center;
-    gap: 60px; /* 控制左右之间的间距 */
-    flex-direction: row; /* 在大屏幕上水平排列 */
+    justify-content: center;
+    gap: 2rem;
 }
 
-.profile-photo {
-    flex: 0 0 150px; /* 固定宽度 */
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
-.profile-photo img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px; /* 调整为圆角矩形 */
-    object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+.navbar a:hover {
+    background-color: #f0f0f0;
 }
 
-.profile-info {
-    flex: 1; /* 使信息部分占据剩余空间 */
-    text-align: left; /* 左对齐 */
+.navbar a.active {
+    background-color: #007bff;
+    color: white;
 }
 
-/* 简历区块样式 */
-.resume-section {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 2px solid #e0e0e0;
+/* Profile Section */
+.profile-intro {
+    background-color: #fff;
+    padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.profile-intro ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin: 1rem 0;
+}
+
+.profile-intro a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.profile-intro a:hover {
+    text-decoration: underline;
+}
+
+/* News and Achievements */
+.achievements {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.achievements h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.achievements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.achievements li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.achievements li::before {
+    content: "•";
+    color: #007bff;
+    position: absolute;
+    left: 0;
+}
+
+/* Honors Section */
+.honors {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.honors h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.honors ul {
+    list-style: none;
+    padding: 0;
+}
+
+.honors li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.honors li::before {
+    content: "🏆";
+    position: absolute;
+    left: 0;
+}
+
+.honors strong {
+    color: #007bff;
+}
+
+/* Resume Section */
+.resume-section {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .resume-item {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0; /* 在每个简历项之间添加分割线 */
-}
-
-.resume-item:last-child {
-    border-bottom: none; /* 去除最后一个简历项的分割线 */
+    margin-bottom: 2rem;
 }
 
 .resume-item h3 {
-    font-weight: 600; /* 加粗部分标题字体 */
-    color: #0070c9; /* 标题颜色 */
-    margin-bottom: 15px;
-    background-color: #f0f0f0; /* 为部分标题添加浅灰色背景 */
-    padding: 10px 15px; /* 增加背景和文本之间的内边距 */
-    border-radius: 5px; /* 为背景添加圆角 */
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .resume-item h4 {
-    font-weight: 500; /* 加粗小标题字体 */
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.resume-item p, .resume-item ul {
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 10px;
+    color: #34495e;
+    margin: 1rem 0 0.5rem;
 }
 
 .resume-item ul {
     list-style-type: disc;
-    padding-left: 20px;
+    padding-left: 2rem;
 }
 
-/* 包裹posts-list内容的浅蓝色边框 */
-.posts-list {
-    border: 2px solid #8cb1da; /* 浅蓝色边框 */
-    border-radius: 8px; /* 圆角 */
-    padding: 20px;
-    background-color: #ffffff; /* 背景颜色为白色 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微的阴影效果 */
-    margin-top: 20px;
+.resume-item em {
+    color: #666;
+    font-style: italic;
 }
 
-h1 {
-    font-size: 2.5em;
-    font-weight: 600;
-    margin-bottom: 1em;
-    color: #1d1d1f;
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    border-top: 1px solid #eee;
 }
 
-p {
-    font-size: 1.25em;
-    line-height: 1.6;
-    margin-bottom: 1.5em;
-    color: #333;
+.social-links {
+    margin-top: 1rem;
 }
 
-a {
+.social-links a {
+    color: #007bff;
     text-decoration: none;
-    font-size: 1.1em;
-    transition: color 0.3s;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
 }
 
-a:hover {
-    color: #005bb5; /* 鼠标悬停时颜色变深 */
+.social-links a:hover {
+    color: #0056b3;
 }
 
-/* 针对手机设备的样式 */
-@media (max-width: 1024px) {
-    h1 {
-        font-size: 2em; /* 缩小标题字号 */
-    }
+/* Loading State */
+#loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
 
+/* Profile Photo */
+.profile-photo {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2rem;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
     .container {
-        width: 90%; /* 在小屏幕上扩大内容宽度 */
+        padding: 1rem;
     }
 
-    .profile-section {
-        flex-direction: column; /* 垂直排列照片和信息 */
-        align-items: center; /* 居中对齐 */
-        gap: 20px; /* 调整间距 */
+    .profile-photo {
+        width: 150px;
+        height: 150px;
     }
 
-    .posts-list {
-        padding: 15px; /* 在小屏幕上减少内边距 */
-        margin-top: 15px;
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
     }
+}
 
-    .resume-section {
-        padding: 15px; /* 缩小简历区块的内边距 */
-    }
+/* Blog Posts */
+.blog-post {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
 
-    .resume-item {
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-    }
+.post-date {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
 
-    p {
-        font-size: 1.1em; /* 缩小段落文字字号 */
-    }
+.post-content {
+    line-height: 1.8;
+}
 
-    a {
-        font-size: 1em; /* 缩小链接文字字号 */
-    }
+.post-content code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.post-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+/* Tags */
+.tags {
+    margin-top: 1rem;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
 }
