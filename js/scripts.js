@@ -38,7 +38,16 @@ async function loadPosts() {
     try {
         toggleLoading(true);
         const posts = [
-            { title: "Example Post 1", file: "posts/example.md" },
+            { 
+                title: "Blockchain-based Authentication in Federated Learning",
+                file: "posts/blockchain-authentication.md",
+                date: "March 15, 2024"
+            },
+            { 
+                title: "Building an Ensemble Model for Bank Card Customer Prediction",
+                file: "posts/machine-learning-project.md",
+                date: "March 10, 2024"
+            },
         ];
 
         const postsList = document.getElementById('posts-list');
@@ -51,7 +60,12 @@ async function loadPosts() {
             const html = marked.parse(content);
             
             const article = document.createElement('article');
-            article.innerHTML = html;
+            article.className = 'blog-post';
+            article.innerHTML = `
+                <h2>${post.title}</h2>
+                <div class="post-date">${post.date}</div>
+                <div class="post-content">${html}</div>
+            `;
             postsList.appendChild(article);
         }
     } catch (error) {
