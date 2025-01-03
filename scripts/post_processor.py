@@ -44,16 +44,6 @@ class PostProcessor:
     def generate_html_file(self, post_data: dict):
         """Generate an HTML file for the post."""
         template = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title} - Songtao Li</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <div id="navbar-placeholder"></div>
     <div class="container">
         <article class="post-full">
             <h1>{title}</h1>
@@ -68,13 +58,10 @@ class PostProcessor:
             </div>
             <div class="post-navigation">
                 <a href="javascript:history.back()" class="back-to-posts">← Back</a>
-                <a href="../../#" onclick="navigateTo('posts')" class="back-to-home">← Back to Posts</a>
+                <a href="#" onclick="navigateTo('posts'); return false;" class="back-to-home">← Back to Posts</a>
             </div>
         </article>
     </div>
-    <script src="../js/scripts.js"></script>
-</body>
-</html>
         """.strip()
         
         tags_html = ''.join(f'<span class="tag">{tag}</span>' for tag in post_data['metadata']['tags'])
