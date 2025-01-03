@@ -1,3 +1,12 @@
+---
+title: Development of Serverless Edge Computing Functionalities
+date: August 2024
+tags:
+  - Edge Computing
+  - Serverless
+description: This project aims to develop serverless edge computing functionalities and a function chain controller.
+---
+
 # Docker-Based Function Chaining System: A Microservices Approach to Function Orchestration
 
 ## Introduction
@@ -132,3 +141,6 @@ The system uses a sophisticated deployment strategy:
 The Docker-Based Function Chaining System represents a modern approach to building distributed systems. Its microservices architecture, combined with Docker containerization, provides a robust foundation for building scalable and maintainable applications. The system's ability to handle complex function chains while maintaining loose coupling makes it an excellent choice for organizations looking to implement flexible and scalable processing pipelines.
 
 The project demonstrates best practices in microservices architecture, container orchestration, and error handling, making it a valuable reference for similar implementations in production environments.
+
+- [GitHub Repository](https://github.com/xiaoxiaoxiaotao/Stateful-Serverless-Function-Chian)
+- [Documentation](https://github.com/xiaoxiaoxiaotao/Stateful-Serverless-Function-Chian/README.md) 

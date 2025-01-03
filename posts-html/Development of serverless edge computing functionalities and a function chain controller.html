@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development of Serverless Edge Computing Functionalities - Songtao Li</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="container">
+        <article class="post-full">
+            <h1>Development of Serverless Edge Computing Functionalities</h1>
+            <div class="post-meta">
+                <span class="post-date">August 2024</span>
+                <div class="post-tags">
+                    <span class="tag">Edge Computing</span><span class="tag">Serverless</span>
+                </div>
+            </div>
+            <div class="post-content">
+                <h1 id="docker-based-function-chaining-system-a-microservices-approach-to-function-orchestration">Docker-Based Function Chaining System: A Microservices Approach to Function Orchestration</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Function Chaining System is an innovative microservices-based architecture that enables seamless function orchestration through Docker containers. This system demonstrates how to build a scalable and maintainable solution for chaining multiple functions together while maintaining loose coupling between services.</p>
+<h2 id="system-architecture">System Architecture</h2>
+<p>The system consists of five main components, each running in its own Docker container:</p>
+<ol>
+<li><strong>Controller Service</strong>: Acts as the orchestrator, managing the flow of requests between services</li>
+<li><strong>Number Service</strong>: Handles initial number processing</li>
+<li><strong>Odd Service</strong>: Processes odd numbers</li>
+<li><strong>Even Service</strong>: Processes even numbers</li>
+<li><strong>Common Error Handler</strong>: Manages error scenarios across the function chain</li>
+</ol>
+<h3 id="network-architecture">Network Architecture</h3>
+<ul>
+<li>All services communicate through a dedicated Docker network (<code>my_docker_network</code>)</li>
+<li>Each service exposes a REST API endpoint on different ports (5000-5004)</li>
+<li>Inter-service communication is handled via HTTP/JSON</li>
+</ul>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<h3 id="core-technologies">Core Technologies</h3>
+<ul>
+<li><strong>Backend Services</strong>: Written in Go using the Gin framework</li>
+<li><strong>Controller</strong>: Implemented in Node.js using Express</li>
+<li><strong>Container Orchestration</strong>: Docker</li>
+<li><strong>Communication Protocol</strong>: REST APIs with JSON payloads</li>
+<li><strong>Configuration</strong>: JSON-based service configuration</li>
+</ul>
+<h3 id="key-features">Key Features</h3>
+<ol>
+<li><strong>Dynamic Function Chaining</strong></li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;functions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;odd&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;operator&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;=&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;val&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Success&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<ol>
+<li><strong>Error Handling</strong></li>
+<li>Centralized error management through the Common Error Handler service</li>
+<li>Graceful failure handling with detailed error reporting</li>
+<li>
+<p>Automatic error routing based on service status</p>
+</li>
+<li>
+<p><strong>Monitoring and Logging</strong></p>
+</li>
+<li>Request timing measurements</li>
+<li>Detailed logging of service interactions</li>
+<li>Health check endpoints for each service</li>
+</ol>
+<h2 id="usage-example">Usage Example</h2>
+<p>Here's a simple example of how to interact with the system:</p>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:5000/api<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;root&quot;:&quot;{\&quot;Number\&quot;:\&quot;2123214\&quot;}&quot;}&#39;</span>
+</code></pre></div>
+
+<p>Response:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;FailureTask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oddTask&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;FunctionResult&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;number&quot;</span><span class="p">:</span><span class="mi">2123214</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="deployment">Deployment</h2>
+<p>The system uses a sophisticated deployment strategy:</p>
+<ol>
+<li><strong>Automated Container Management</strong></li>
+<li>Single command deployment using <code>start_functions.sh</code></li>
+<li>Automatic network creation and container orchestration</li>
+<li>
+<p>Volume mounting for real-time code updates</p>
+</li>
+<li>
+<p><strong>Development Environment</strong></p>
+</li>
+<li>Hot-reloading support for rapid development</li>
+<li>Shared volumes for function definitions</li>
+<li>Isolated testing environments</li>
+</ol>
+<h2 id="benefits-and-use-cases">Benefits and Use Cases</h2>
+<ol>
+<li><strong>Modularity</strong></li>
+<li>Each function runs in isolation</li>
+<li>Easy to add new functions or modify existing ones</li>
+<li>
+<p>Independent scaling of services</p>
+</li>
+<li>
+<p><strong>Maintainability</strong></p>
+</li>
+<li>Clear separation of concerns</li>
+<li>Standardized error handling</li>
+<li>
+<p>Consistent API design across services</p>
+</li>
+<li>
+<p><strong>Scalability</strong></p>
+</li>
+<li>Container-based architecture enables easy horizontal scaling</li>
+<li>Independent service deployment</li>
+<li>Load balancing ready</li>
+</ol>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ol>
+<li><strong>Service Discovery</strong></li>
+<li>Implementation of service discovery mechanisms</li>
+<li>
+<p>Dynamic service registration</p>
+</li>
+<li>
+<p><strong>Monitoring Dashboard</strong></p>
+</li>
+<li>Real-time monitoring of function chains</li>
+<li>
+<p>Performance metrics visualization</p>
+</li>
+<li>
+<p><strong>Advanced Error Recovery</strong></p>
+</li>
+<li>Retry mechanisms</li>
+<li>Circuit breaker implementation</li>
+<li>Fallback strategies</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Docker-Based Function Chaining System represents a modern approach to building distributed systems. Its microservices architecture, combined with Docker containerization, provides a robust foundation for building scalable and maintainable applications. The system's ability to handle complex function chains while maintaining loose coupling makes it an excellent choice for organizations looking to implement flexible and scalable processing pipelines.</p>
+<p>The project demonstrates best practices in microservices architecture, container orchestration, and error handling, making it a valuable reference for similar implementations in production environments.</p>
+<ul>
+<li><a href="https://github.com/xiaoxiaoxiaotao/Stateful-Serverless-Function-Chian">GitHub Repository</a></li>
+<li><a href="https://github.com/xiaoxiaoxiaotao/Stateful-Serverless-Function-Chian/README.md">Documentation</a></li>
+</ul>
+            </div>
+            <div class="post-navigation">
+                <a href="#" onclick="navigateTo('posts')" class="back-to-posts">← Back to Posts</a>
+            </div>
+        </article>
+    </div>
+    <script src="../js/scripts.js"></script>
+</body>
+</html>
