@@ -1,13 +1,11 @@
 ---
-title: Development of Serverless Edge Computing Functionalities
+title: "Docker-Based Function Chaining System: A Microservices Approach to Function Orchestration"
 date: August 2024
 tags:
   - Edge Computing
   - Serverless
 description: This project aims to develop serverless edge computing functionalities and a function chain controller.
 ---
-
-# Docker-Based Function Chaining System: A Microservices Approach to Function Orchestration
 
 ## Introduction
 
@@ -470,38 +468,16 @@ app.listen(5000, '0.0.0.0', () => {
 ```
 
 2. **Error Handling**
-- Centralized error management through the Common Error Handler service
-- Graceful failure handling with detailed error reporting
-- Automatic error routing based on service status
+The system provides centralized error management through the Common Error Handler service, enhancing overall observability and maintainability. It supports graceful failure handling by delivering detailed error reporting, which facilitates quick identification and resolution of issues. Furthermore, the system automatically routes errors based on the status of individual services, ensuring stability and reliability even when certain components are temporarily unavailable.
 
 3. **Monitoring and Logging**
-- Request timing measurements
-- Detailed logging of service interactions
-- Health check endpoints for each service
-
-## Usage Example
-
-Here's a simple example of how to interact with the system:
-
-```bash
-curl -X POST http://localhost:5000/api \
-     -H 'Content-Type: application/json' \
-     -d '{"root":"{\"Number\":\"2123214\"}"}'
-```
-
-Response:
-```json
-{
-  "FailureTask": "oddTask",
-  "FunctionResult": {"number":2123214}
-}
-```
+The system includes comprehensive monitoring capabilities through request timing measurements, enabling performance tracking and latency analysis. It also maintains detailed logging of all service interactions, providing valuable insights for debugging, auditing, and system behavior analysis. Additionally, each service is equipped with health check endpoints to support real-time status monitoring and ensure reliable service operation.
 
 ## Deployment
 
 The system uses a sophisticated deployment strategy:
 
-1. **Automated Container Management**
+### Automated Container Management
    - Single command deployment using `start_functions.sh`
    - Automatic network creation and container orchestration
    - Volume mounting for real-time code updates
@@ -513,6 +489,7 @@ To build the Docker images and start the containers, run the following script:
 ```
 
 This script will:
+
 - Create a Docker network (`my_docker_network`) if it doesn't already exist. Dockers will conmunicate each other through this Docker network.
 - Build Docker images for each service if they don't already exist.
 - Start containers for each service, binding them to specific ports:
@@ -536,40 +513,52 @@ To remove all containers and Docker images related to the project, use the follo
 ./remove_image_container.sh
 ```
 
+## Usage Example
 
-2. **Development Environment**
-   - Hot-reloading support for rapid development
-   - Shared volumes for function definitions
-   - Isolated testing environments
+Here's a simple example of how to interact with the system:
 
-## Benefits and Use Cases
+```bash
+curl -X POST http://localhost:5000/api \
+     -H 'Content-Type: application/json' \
+     -d '{"root":"{\"Number\":\"2123214\"}"}'
+```
 
-1. **Modularity**
+Response:
+```json
+{
+  "FailureTask": "oddTask",
+  "FunctionResult": {"number":2123214}
+}
+```
+
+## Benefits
+
+### Modularity
    - Each function runs in isolation
    - Easy to add new functions or modify existing ones
    - Independent scaling of services
 
-2. **Maintainability**
+### Maintainability
    - Clear separation of concerns
    - Standardized error handling
    - Consistent API design across services
 
-3. **Scalability**
+### Scalability
    - Container-based architecture enables easy horizontal scaling
    - Independent service deployment
    - Load balancing ready
 
 ## Future Enhancements
 
-1. **Service Discovery**
+### Service Discovery
    - Implementation of service discovery mechanisms
    - Dynamic service registration
 
-2. **Monitoring Dashboard**
+### Monitoring Dashboard
    - Real-time monitoring of function chains
    - Performance metrics visualization
 
-3. **Advanced Error Recovery**
+### Advanced Error Recovery
    - Retry mechanisms
    - Circuit breaker implementation
    - Fallback strategies
