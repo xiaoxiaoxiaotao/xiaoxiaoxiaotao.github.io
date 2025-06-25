@@ -1,5 +1,5 @@
 ---
-title: "Docker-Based Function Chaining System: A Microservices Approach to Function Orchestration"
+title: "Development of serverless edge computing functionalities and a function chain controller"
 date: August 2024
 tags:
   - Edge Computing

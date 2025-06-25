@@ -2,7 +2,7 @@
     "posts": [
         {
             "id": "serverless-edge-computing",
-            "title": "Docker-Based Function Chaining System: A Microservices Approach to Function Orchestration",
+            "title": "Development of serverless edge computing functionalities and a function chain controller",
             "description": "This project aims to develop serverless edge computing functionalities and a function chain controller. The goal is to create a scalable and maintainable solution for chaining multiple functions together while maintaining loose coupling between services.",
             "content": "This project focuses on developing serverless edge computing functionalities and a function chain controller. The main objectives include:\n\n1. Creating a scalable architecture for serverless edge computing\n2. Implementing a function chain controller for orchestrating multiple functions\n3. Ensuring loose coupling between services\n4. Maintaining state across function executions\n\nThe project demonstrates the practical application of serverless computing concepts in edge environments, providing insights into modern cloud architecture patterns.",
             "link": "https://github.com/xiaoxiaoxiaotao/Stateful-Serverless-Function-Chian",
