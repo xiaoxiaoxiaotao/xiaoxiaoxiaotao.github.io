@@ -59,6 +59,67 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 });
 
+// Initialize code blocks with enhanced features
+function initializeCodeBlocks() {
+    // Find all code blocks
+    const codeBlocks = document.querySelectorAll('.post-content .codehilite');
+    
+    codeBlocks.forEach((block, index) => {
+        // Determine language from the code block
+        let language = 'code';
+        const codeElement = block.querySelector('code');
+        if (codeElement && codeElement.className) {
+            const langMatch = codeElement.className.match(/language-(\w+)/);
+            if (langMatch) {
+                language = langMatch[1];
+            }
+        }
+        
+        // Create wrapper and header
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block';
+        
+        const header = document.createElement('div');
+        header.className = 'code-header';
+        
+        const langSpan = document.createElement('span');
+        langSpan.className = 'code-language';
+        langSpan.textContent = language;
+        
+        const copyButton = document.createElement('button');
+        copyButton.className = 'copy-button';
+        copyButton.textContent = '复制';
+        copyButton.onclick = function() {
+            const code = block.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                copyButton.textContent = '已复制!';
+                copyButton.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyButton.textContent = '复制';
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                copyButton.textContent = '复制失败';
+                
+                setTimeout(() => {
+                    copyButton.textContent = '复制';
+                }, 2000);
+            });
+        };
+        
+        header.appendChild(langSpan);
+        header.appendChild(copyButton);
+        
+        // Replace the original block with our enhanced version
+        const parent = block.parentNode;
+        parent.insertBefore(wrapper, block);
+        wrapper.appendChild(header);
+        wrapper.appendChild(block);
+    });
+}
+
 // Load post content
 async function loadPost(postId) {
     try {
@@ -84,6 +145,9 @@ async function loadPost(postId) {
         
         // Insert the content
         document.getElementById('post-content').innerHTML = articleContent;
+        
+        // Initialize enhanced code blocks
+        initializeCodeBlocks();
         
         // Update URL without page reload
         window.history.pushState({ postId }, '', `#post/${postId}`);

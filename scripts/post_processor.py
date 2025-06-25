@@ -29,10 +29,27 @@ class PostProcessor:
         if missing_fields:
             raise ValueError(f"Missing required metadata fields: {', '.join(missing_fields)}")
         
-        # Convert markdown to HTML
+        # Convert markdown to HTML with enhanced code highlighting
         html_content = markdown.markdown(
             post.content,
-            extensions=['fenced_code', 'codehilite', 'tables', 'toc']
+            extensions=[
+                'fenced_code',
+                'codehilite',
+                'tables',
+                'toc',
+                'markdown.extensions.attr_list',
+                'markdown.extensions.def_list',
+                'markdown.extensions.footnotes',
+                'markdown.extensions.md_in_html'
+            ],
+            extension_configs={
+                'codehilite': {
+                    'linenums': False,
+                    'use_pygments': True,
+                    'pygments_style': 'monokai',
+                    'noclasses': False
+                }
+            }
         )
         
         return {
@@ -55,10 +72,6 @@ class PostProcessor:
             </div>
             <div class="post-content">
                 {content}
-            </div>
-            <div class="post-navigation">
-                <a href="javascript:history.back()" class="back-to-posts">← Back</a>
-                <a href="#" onclick="navigateTo('posts'); return false;" class="back-to-home">← Back to Posts</a>
             </div>
         </article>
     </div>
@@ -138,4 +151,4 @@ class PostProcessor:
 
 if __name__ == '__main__':
     processor = PostProcessor()
-    processor.process_all_posts() 
+    processor.process_all_posts()
