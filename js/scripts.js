@@ -120,49 +120,6 @@ function initializeCodeBlocks() {
     });
 }
 
-// Load post content
-async function loadPost(postId) {
-    try {
-        toggleLoading(true);
-        state.currentPage = 'post-detail';
-        
-        // First load the publication-detail template
-        const baseUrl = getBaseUrl();
-        const templateResponse = await fetch(baseUrl + 'components/publication-detail.html');
-        if (!templateResponse.ok) throw new Error('Failed to load publication detail template');
-        const template = await templateResponse.text();
-        document.getElementById('content-placeholder').innerHTML = template;
-        
-        // Then load the post content from posts-html directory
-        const postResponse = await fetch(baseUrl + `posts-html/${postId}.html`);
-        if (!postResponse.ok) throw new Error('Failed to load post content');
-        const postContent = await postResponse.text();
-        
-        // Extract the article content from the full HTML
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = postContent;
-        const articleContent = tempDiv.querySelector('.post-full').innerHTML;
-        
-        // Insert the content
-        document.getElementById('post-content').innerHTML = articleContent;
-        
-        // Initialize enhanced code blocks
-        initializeCodeBlocks();
-        
-        // Update URL without page reload
-        window.history.pushState({ postId }, '', `#post/${postId}`);
-        
-        // Update active navigation
-        document.querySelectorAll('.navbar a').forEach(link => {
-            link.classList.remove('active');
-        });
-    } catch (error) {
-        handleError(error);
-    } finally {
-        toggleLoading(false);
-    }
-}
-
 // Page navigation
 async function navigateTo(page) {
     try {
