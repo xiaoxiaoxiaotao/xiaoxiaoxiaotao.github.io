@@ -554,3 +554,110 @@ footer {
     color: #28a745;
     font-style: italic;
 }
+
+/* Publications Styles */
+.post-item {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.post-item h2 {
+    color: #2c3e50;
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+}
+
+.post-item h2 a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.post-item h2 a:hover {
+    color: #007bff;
+}
+
+.post-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 0.95rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.post-authors {
+    font-weight: 500;
+}
+
+.post-year {
+    color: #666;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.published {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.accepted {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.publication-venue {
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.accept-info {
+    color: #856404;
+    font-weight: 500;
+}
+
+.publication-doi {
+    margin-bottom: 1rem;
+}
+
+.doi-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.doi-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.post-description {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.post-tags {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}

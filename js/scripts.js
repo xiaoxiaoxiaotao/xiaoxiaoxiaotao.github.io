@@ -126,10 +126,10 @@ async function loadPost(postId) {
         toggleLoading(true);
         state.currentPage = 'post-detail';
         
-        // First load the post-detail template
+        // First load the publication-detail template
         const baseUrl = getBaseUrl();
-        const templateResponse = await fetch(baseUrl + 'components/post-detail.html');
-        if (!templateResponse.ok) throw new Error('Failed to load post detail template');
+        const templateResponse = await fetch(baseUrl + 'components/publication-detail.html');
+        if (!templateResponse.ok) throw new Error('Failed to load publication detail template');
         const template = await templateResponse.text();
         document.getElementById('content-placeholder').innerHTML = template;
         
@@ -184,6 +184,11 @@ async function navigateTo(page) {
         // Update document title
         document.title = page === 'home' ? 'Songtao Li: Personal Portfolio' : `${page.charAt(0).toUpperCase() + page.slice(1)} - Songtao Li`;
 
+        // Load publications data if navigating to publications page
+        if (page === 'publications') {
+            await loadPublications();
+        }
+
         // Update URL without page reload
         const newUrl = baseUrl + `#${page}`;
         window.history.pushState({ page }, '', newUrl);
@@ -191,5 +196,64 @@ async function navigateTo(page) {
         handleError(error);
     } finally {
         toggleLoading(false);
+    }
+}
+
+// Load publications from JSON and render them
+async function loadPublications() {
+    try {
+        const baseUrl = getBaseUrl();
+        const response = await fetch(baseUrl + 'posts/publications.json');
+        if (!response.ok) throw new Error('Failed to load publications data');
+        const data = await response.json();
+        
+        const publicationsList = document.getElementById('publications-list');
+        if (!publicationsList) return;
+        
+        publicationsList.innerHTML = '';
+        
+        data.publications.forEach(pub => {
+            const pubItem = document.createElement('div');
+            pubItem.className = 'post-item';
+            
+            const statusBadge = pub.status === 'published' 
+                ? `<span class="status-badge published">Published</span>`
+                : `<span class="status-badge accepted">Accepted (${pub.acceptDate})</span>`;
+            
+            const venueInfo = pub.status === 'published'
+                ? `<div class="publication-venue">${pub.venue}</div>`
+                : `<div class="publication-venue">${pub.venue} <span class="accept-info">(Accepted: ${pub.acceptDate})</span></div>`;
+            
+            const doiLink = pub.doi 
+                ? `<a href="${pub.url}" target="_blank" class="doi-link">DOI: ${pub.doi}</a>`
+                : '';
+            
+            const tagsHtml = pub.tags 
+                ? `<div class="post-tags">
+                    ${pub.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                   </div>`
+                : '';
+            
+            pubItem.innerHTML = `
+                <h2>${pub.title}</h2>
+                <div class="post-meta">
+                    <span class="post-authors">${pub.authors}</span>
+                    <span class="post-year">${pub.year}</span>
+                    ${statusBadge}
+                </div>
+                ${venueInfo}
+                ${doiLink ? `<div class="publication-doi">${doiLink}</div>` : ''}
+                <p class="post-description">${pub.abstract}</p>
+                ${tagsHtml}
+            `;
+            
+            publicationsList.appendChild(pubItem);
+        });
+    } catch (error) {
+        console.error('Error loading publications:', error);
+        const publicationsList = document.getElementById('publications-list');
+        if (publicationsList) {
+            publicationsList.innerHTML = '<p class="error-message">Failed to load publications. Please try again later.</p>';
+        }
     }
 }

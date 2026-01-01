@@ -1,0 +1,42 @@
+{
+    "publications": [
+        {
+            "id": "fl-authentication",
+            "title": "DA34FL: A Robust Dynamic Accumulator-based Authentication and Key Agreement with Preserving Model Training Data Integrity for Federated Learning",
+            "authors": "Songtao Li, Yixuan Zhang, Jie Bai, and Kuan Fan",
+            "venue": "Scientific Reports",
+            "year": "2025",
+            "status": "published",
+            "doi": "10.1038/s41598-025-33685-1",
+            "url": "https://doi.org/10.1038/s41598-025-33685-1",
+            "abstract": "This paper proposes a robust authentication and key agreement protocol based on dynamic accumulators for federated learning systems, which preserves the integrity of model training data while ensuring secure communication between participants.",
+            "tags": ["Federated Learning", "Authentication and Key Agreement", "eCK adversary", "Dynamic Accumulator", "Blockchain"]
+        },
+        {
+            "id": "multimodal-survey",
+            "title": "Multimodal Alignment and Fusion: A Survey",
+            "authors": "Songtao Li, Hao Tang",
+            "venue": "International Journal of Computer Vision (IJCV)",
+            "year": "2025",
+            "acceptDate": "September 2025",
+            "doi": "10.48550/arXiv.2411.17040",
+            "url": "https://doi.org/10.48550/arXiv.2411.17040",
+            "abstract": "This survey provides a comprehensive overview of multimodal learning, covering recent advances in multimodal representation learning, cross-modal alignment, and multimodal fusion techniques.",
+            "tags": ["Multimodal Alignment", "Multimodal Fusion", "Multimodality", "Machine Learning", "Survey"]
+        },
+        {
+            "id": "digital-transformation-street-vendor",
+            "title": "The Principles of Digital Transformation on China's Street Vendor Economy",
+            "authors": "Songtao Li",
+            "venue": "Proceedings of the 2024 Guangdong-Hong Kong-Macao Greater Bay Area International Conference on Digital Economy and Artificial Intelligence (DEAI '24)",
+            "year": "2024",
+            "publisher": "Association for Computing Machinery",
+            "pages": "115–120",
+            "doi": "10.1145/3675417.3675437",
+            "url": "https://doi.org/10.1145/3675417.3675437",
+            "status": "published",
+            "abstract": "This study explores how digital transformation, particularly AI and related technologies, has affected China's street vendor economy and proposes principles for its digitalization.",
+            "tags": ["Digital Transformation", "Street Vendor Economy", "AI", "Big Data", "Digital Marketing"]
+        }
+    ]
+}
