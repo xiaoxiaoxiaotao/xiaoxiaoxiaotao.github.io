@@ -2,6 +2,8 @@
 
 This project is a clean, responsive, and data-driven personal website template designed for researchers, students, and developers. It features a Single Page Application (SPA) experience using vanilla JavaScript, making it lightweight and easy to deploy on any static hosting service like GitHub Pages.
 
+> **Live Demo:** [https://www.lisongtao.eu.org/#home](https://www.lisongtao.eu.org/#home)
+
 ## Features
 
 - **Single Page Application (SPA)**: Smooth page transitions without full reloads using the History API.
