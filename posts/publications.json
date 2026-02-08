@@ -1,18 +1,6 @@
 {
     "publications": [
         {
-            "id": "fl-authentication",
-            "title": "DA34FL: A Robust Dynamic Accumulator-based Authentication and Key Agreement with Preserving Model Training Data Integrity for Federated Learning",
-            "authors": "Songtao Li, Yixuan Zhang, Jie Bai, and Kuan Fan",
-            "venue": "Scientific Reports",
-            "year": "2025",
-            "status": "published",
-            "doi": "10.1038/s41598-025-33685-1",
-            "url": "https://doi.org/10.1038/s41598-025-33685-1",
-            "abstract": "This paper proposes a robust authentication and key agreement protocol based on dynamic accumulators for federated learning systems, which preserves the integrity of model training data while ensuring secure communication between participants.",
-            "tags": ["Federated Learning", "Authentication and Key Agreement", "eCK adversary", "Dynamic Accumulator", "Blockchain"]
-        },
-        {
             "id": "multimodal-survey",
             "title": "Multimodal Alignment and Fusion: A Survey",
             "authors": "Songtao Li, Hao Tang",
@@ -25,6 +13,18 @@
             "url": "https://doi.org/10.1007/s11263-025-02667-1",
             "abstract": "This survey provides a comprehensive overview of multimodal learning, covering recent advances in multimodal representation learning, cross-modal alignment, and multimodal fusion techniques.",
             "tags": ["Multimodal Alignment", "Multimodal Fusion", "Multimodality", "Machine Learning", "Survey"]
+        },
+        {
+            "id": "fl-authentication",
+            "title": "DA34FL: A Robust Dynamic Accumulator-based Authentication and Key Agreement with Preserving Model Training Data Integrity for Federated Learning",
+            "authors": "Songtao Li, Yixuan Zhang, Jie Bai, and Kuan Fan",
+            "venue": "Scientific Reports",
+            "year": "2025",
+            "status": "published",
+            "doi": "10.1038/s41598-025-33685-1",
+            "url": "https://doi.org/10.1038/s41598-025-33685-1",
+            "abstract": "This paper proposes a robust authentication and key agreement protocol based on dynamic accumulators for federated learning systems, which preserves the integrity of model training data while ensuring secure communication between participants.",
+            "tags": ["Federated Learning", "Authentication and Key Agreement", "eCK adversary", "Dynamic Accumulator", "Blockchain"]
         },
         {
             "id": "digital-transformation-street-vendor",
