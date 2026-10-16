@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me - Songtao Li</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <!-- Profile Layout -->
-        <div class="profile-section">
-            <!-- Profile Photo -->
+<div class="container">
+    <section class="profile-section">
+        <div class="profile-layout">
             <div class="profile-photo">
-                <img src="images/photo.jpg" alt="Songtao Li">
+                <img src="images/photo.jpg" alt="Songtao Li" width="800" height="1157" decoding="async">
             </div>
-            <!-- Brief Introduction -->
             <div class="profile-info">
-                <h1>About Me</h1>
+                <h1 class="page-title">About Me</h1>
                 <p>
                     Hello! I'm Li Songtao, a passionate Communications Engineering student at Northeastern University (China), Sydney Smart Technology College. I am pursuing my Bachelor of Engineering degree.
                 </p>
@@ -25,96 +14,89 @@
                 </p>
             </div>
         </div>
+    </section>
 
-        <!-- Resume Section -->
-        <div class="resume-section">
-            <!-- Projects -->
-            <div class="resume-item">
-                <h3>Project Experience</h3>
-                <div class="items-grid">
-                    <div class="item-card">
-                        <h4>Research on the Multimodal Fusion and Alignment</h4>
-                        <p><em>Undergraduate Research Intern, Remote, September 2024 - Present</em></p>
-                        <ul>
-                            <li>Conducted a survey on integrating large-scale models across multiple modalities into a unified framework (<a href="https://arxiv.org/abs/2411.17040" target="_blank">arXiv:2411.17040</a>)</li>
-                            <li>Improve the efficiency of MLLM (multimodal large language model) to reduce the cost of vision-language fine-tuning (ongoing)</li>
-                        </ul>
-                    </div>
-
-                    <div class="item-card">
-                        <h4>Authentication Scheme for Federated Learning</h4>
-                        <p><em>Personal Project, Qinhuangdao, February - October 2024</em></p>
-                        <ul>
-                            <li>Designed a dynamic accumulator-based robust and effective authentication for securing training data sharing in Federated Learning (Paper under review)</li>
-                            <li>Conducted robust security analyses and performance study of the proposed authentication protocol</li>
-                        </ul>
-                    </div>
-
-                    <div class="item-card">
-                        <h4>NCSU Summer GEARS Program</h4>
-                        <p><em>Participant, Remote, July - August 2024</em></p>
-                        <ul>
-                            <li>Created serverless edge computing functionalities and designed a controller, complemented by crafting a function chain that orchestrates the execution of various tasks</li>
-                            <li>Collaborated remotely with a mentoring professor and other team members from NCSU, resulting in a highly positive evaluation for analytical skills, dependability, teamwork, and communication</li>
-                        </ul>
-                    </div>
+    <div class="resume-section">
+        <div class="resume-item">
+            <h3>Project Experience</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <h4>Research on the Multimodal Fusion and Alignment</h4>
+                    <p><em>Undergraduate Research Intern, Remote, September 2024 - Present</em></p>
+                    <ul>
+                        <li>Conducted a survey on integrating large-scale models across multiple modalities into a unified framework (<a href="https://arxiv.org/abs/2411.17040" target="_blank" rel="noopener noreferrer">arXiv:2411.17040</a>)</li>
+                        <li>Improve the efficiency of MLLM (multimodal large language model) to reduce the cost of vision-language fine-tuning (ongoing)</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- Internships -->
-            <div class="resume-item">
-                <h3>Internship Experience</h3>
-                <div class="items-grid">
-                    <div class="item-card">
-                        <h4>AI Recognition Project Intern - Chengdu Guangshu Huilian Technology Co., Ltd.</h4>
-                        <p><em>Chengdu, China, July 2025 - August 2025</em></p>
-                        <ul>
-                            <li>Performed data processing and annotation for AI recognition projects using Labelme and X-AnyLabeling, applying data augmentation techniques and OpenCV for dataset preparation and quality enhancement.</li>
-                            <li>Trained and optimized YOLOv8-based models for smoking behavior recognition and mining vehicle detection, utilizing transfer learning and TensorRT acceleration to achieve 92%+ accuracy on edge devices.</li>
-                            <li>Managed AI system operations using Docker containerization and RTSP protocol integration, providing 24/7 monitoring and maintenance to ensure the high availability of model services.</li>
-                        </ul>
-                    </div>
-
-                    <div class="item-card">
-                        <h4>Engineering Intern (Hardware R&D Department) - Beijing Codnoy Technology Co., Ltd.</h4>
-                        <p><em>Remote & Qinhuangdao, China, July 2023 - October 2023</em></p>
-                        <ul>
-                            <li>Architected and integrated an STM32F4-based master–slave intelligent robot car: master for path planning and command dispatch; slaves for motor control and sensor acquisition. (Awarded "Best Sharing Award").</li>
-                            <li>Engineered reliable communications: UART with a custom framed protocol (header, length, command type, CRC) for robust data transfer; integrated I2C peripherals (OLED display, temperature/humidity sensors).</li>
-                            <li>Developed a high-precision servo module using STM32 timers to generate 50Hz PWM (5%-10% duty) with software filtering and angle mapping, achieving ±1° positioning accuracy.</li>
-                        </ul>
-                    </div>
-
-                    <div class="item-card">
-                        <h4>Embedded Engineer Intern - Sichuan Zhuchuang Safety Technology Co., Ltd.</h4>
-                        <p><em>Chengdu, China, July 2023 - August 2023</em></p>
-                        <ul>
-                            <li>Implemented and validated MODBUS/RS485 communication protocols to establish reliable data transmission, including debugging and testing communication modules.</li>
-                            <li>Analyzed operational data to diagnose and resolve faults in automatic drainage and major ventilator systems, leveraging understanding of system mechanics to improve reliability.</li>
-                            <li>Automated underground pump drainage based on water level and enabled remote start/stop control for surface ventilators using C programming, in collaboration with team members.</li>
-                        </ul>
-                    </div>
+                <div class="item-card">
+                    <h4>Authentication Scheme for Federated Learning</h4>
+                    <p><em>Personal Project, Qinhuangdao, February - October 2024</em></p>
+                    <ul>
+                        <li>Designed a dynamic accumulator-based robust and effective authentication for securing training data sharing in Federated Learning (Paper under review)</li>
+                        <li>Conducted robust security analyses and performance study of the proposed authentication protocol</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- Additional Information -->
-            <div class="resume-item">
-                <h3>Additional Information</h3>
-                <ul>
-                    <li>Languages: Chinese (native), English (fluent, CET6-579, IELTS 6.5)</li>
-                    <li>Programming: C, C++, Python</li>
-                    <li>Tools & Technologies: 
-                        <ul>
-                            <li>Development: Git, Linux, Docker, Pytorch</li>
-                            <li>Office Tools: MS Office Suite (Word, Excel, PowerPoint)</li>
-                        </ul>
-                    </li>
-                    <li>Interests: Chinese chess, jogging, traveling</li>
-                </ul>
+                <div class="item-card">
+                    <h4>NCSU Summer GEARS Program</h4>
+                    <p><em>Participant, Remote, July - August 2024</em></p>
+                    <ul>
+                        <li>Created serverless edge computing functionalities and designed a controller, complemented by crafting a function chain that orchestrates the execution of various tasks</li>
+                        <li>Collaborated remotely with a mentoring professor and other team members from NCSU, resulting in a highly positive evaluation for analytical skills, dependability, teamwork, and communication</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="js/scripts.js"></script>
-</body>
-</html>
+        <div class="resume-item">
+            <h3>Internship Experience</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <h4>AI Recognition Project Intern - Chengdu Guangshu Huilian Technology Co., Ltd.</h4>
+                    <p><em>Chengdu, China, July 2025 - August 2025</em></p>
+                    <ul>
+                        <li>Performed data processing and annotation for AI recognition projects using Labelme and X-AnyLabeling, applying data augmentation techniques and OpenCV for dataset preparation and quality enhancement.</li>
+                        <li>Trained and optimized YOLOv8-based models for smoking behavior recognition and mining vehicle detection, utilizing transfer learning and TensorRT acceleration to achieve 92%+ accuracy on edge devices.</li>
+                        <li>Managed AI system operations using Docker containerization and RTSP protocol integration, providing 24/7 monitoring and maintenance to ensure the high availability of model services.</li>
+                    </ul>
+                </div>
+
+                <div class="item-card">
+                    <h4>Engineering Intern (Hardware R&D Department) - Beijing Codnoy Technology Co., Ltd.</h4>
+                    <p><em>Remote & Qinhuangdao, China, July 2023 - October 2023</em></p>
+                    <ul>
+                        <li>Architected and integrated an STM32F4-based master–slave intelligent robot car: master for path planning and command dispatch; slaves for motor control and sensor acquisition. (Awarded "Best Sharing Award").</li>
+                        <li>Engineered reliable communications: UART with a custom framed protocol (header, length, command type, CRC) for robust data transfer; integrated I2C peripherals (OLED display, temperature/humidity sensors).</li>
+                        <li>Developed a high-precision servo module using STM32 timers to generate 50Hz PWM (5%-10% duty) with software filtering and angle mapping, achieving ±1° positioning accuracy.</li>
+                    </ul>
+                </div>
+
+                <div class="item-card">
+                    <h4>Embedded Engineer Intern - Sichuan Zhuchuang Safety Technology Co., Ltd.</h4>
+                    <p><em>Chengdu, China, July 2023 - August 2023</em></p>
+                    <ul>
+                        <li>Implemented and validated MODBUS/RS485 communication protocols to establish reliable data transmission, including debugging and testing communication modules.</li>
+                        <li>Analyzed operational data to diagnose and resolve faults in automatic drainage and major ventilator systems, leveraging understanding of system mechanics to improve reliability.</li>
+                        <li>Automated underground pump drainage based on water level and enabled remote start/stop control for surface ventilators using C programming, in collaboration with team members.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-item">
+            <h3>Additional Information</h3>
+            <ul>
+                <li>Languages: Chinese (native), English (fluent, CET6-579, IELTS 6.5)</li>
+                <li>Programming: C, C++, Python</li>
+                <li>Tools & Technologies:
+                    <ul>
+                        <li>Development: Git, Linux, Docker, Pytorch</li>
+                        <li>Office Tools: MS Office Suite (Word, Excel, PowerPoint)</li>
+                    </ul>
+                </li>
+                <li>Interests: Chinese chess, jogging, traveling</li>
+            </ul>
+        </div>
+    </div>
+</div>
