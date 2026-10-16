@@ -275,6 +275,14 @@ function escapeHtml(value) {
     })[char]);
 }
 
+const OWNER_NAME = 'Songtao Li';
+
+function formatAuthors(authors) {
+    const safe = escapeHtml(authors);
+    const name = escapeHtml(OWNER_NAME);
+    return safe.split(name).join(`<strong class="author-self">${name}</strong>`);
+}
+
 async function loadPublications() {
     try {
         const baseUrl = getBaseUrl();
@@ -291,33 +299,9 @@ async function loadPublications() {
             const pubItem = document.createElement('article');
             pubItem.className = 'post-item';
 
-            const statusBadge = pub.status === 'published'
-                ? '<span class="status-badge published">Published</span>'
-                : `<span class="status-badge accepted">Accepted (${escapeHtml(pub.acceptDate)})</span>`;
-
-            const venueInfo = pub.status === 'published'
-                ? `<p class="publication-venue">${escapeHtml(pub.venue)}</p>`
-                : `<p class="publication-venue">${escapeHtml(pub.venue)} <span class="accept-info">(Accepted: ${escapeHtml(pub.acceptDate)})</span></p>`;
-
-            const doiLink = pub.doi
-                ? `<a href="${escapeHtml(pub.url)}" target="_blank" rel="noopener noreferrer" class="doi-link">DOI: ${escapeHtml(pub.doi)}</a>`
-                : '';
-
-            const tagsHtml = pub.tags
-                ? `<div class="post-tags">${pub.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>`
-                : '';
-
             pubItem.innerHTML = `
                 <h2>${escapeHtml(pub.title)}</h2>
-                <div class="post-meta">
-                    <span class="post-authors">${escapeHtml(pub.authors)}</span>
-                    <span class="post-year">${escapeHtml(pub.year)}</span>
-                    ${statusBadge}
-                </div>
-                ${venueInfo}
-                ${doiLink ? `<div class="publication-doi">${doiLink}</div>` : ''}
-                <p class="post-description">${escapeHtml(pub.abstract)}</p>
-                ${tagsHtml}
+                <p class="post-authors">${formatAuthors(pub.authors)}</p>
             `;
 
             publicationsList.appendChild(pubItem);
