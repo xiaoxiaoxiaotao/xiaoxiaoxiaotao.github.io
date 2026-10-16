@@ -283,6 +283,19 @@ function formatAuthors(authors) {
     return safe.split(name).join(`<strong class="author-self">${name}</strong>`);
 }
 
+function doiUrl(doi) {
+    const value = String(doi == null ? '' : doi).trim();
+    if (!/^10\.\d{4,9}\/\S+$/.test(value)) return '';
+    return 'https://doi.org/' + value;
+}
+
+function publicationTitleHtml(pub) {
+    const title = escapeHtml(pub.title);
+    const href = doiUrl(pub.doi);
+    if (!href) return title;
+    return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${title}</a>`;
+}
+
 async function loadPublications() {
     try {
         const baseUrl = getBaseUrl();
@@ -300,7 +313,7 @@ async function loadPublications() {
             pubItem.className = 'post-item';
 
             pubItem.innerHTML = `
-                <h2>${escapeHtml(pub.title)}</h2>
+                <h2>${publicationTitleHtml(pub)}</h2>
                 <p class="post-authors">${formatAuthors(pub.authors)}</p>
             `;
 

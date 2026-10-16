@@ -474,55 +474,12 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 
 .resume-section { margin-top: 0.25rem; }
 
-.items-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.9rem;
-}
-
-@media (min-width: 680px) {
-    .items-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 980px) {
-    .items-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-.item-card {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 1.05rem 1rem 1.1rem;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.item-card h4 {
-    margin: 0 0 0.4rem;
-    font-size: 1.08rem;
-}
-
-.item-card p {
-    margin: 0 0 0.75rem;
-    color: var(--muted);
-    font-size: 0.94rem;
-}
-
-.item-card ul,
 .resume-item > ul {
     margin: 0;
     padding-left: 1.15rem;
 }
 
-.item-card li + li,
 .resume-item > ul > li + li { margin-top: 0.4rem; }
-
-.resume-item h4 {
-    margin: 1rem 0 0.4rem;
-}
-
-.resume-item em { color: var(--muted); }
 
 .resume-item ul ul {
     margin-top: 0.35rem;
@@ -530,14 +487,12 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 }
 
 @media (hover: hover) {
-    .item-card,
     .post-item,
     .blog-post,
     .post-preview {
         transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
-    .item-card:hover,
     .post-item:hover,
     .blog-post:hover,
     .post-preview:hover {
@@ -589,8 +544,8 @@ footer p { margin: 0 0 0.35rem; font-size: 0.92rem; }
 }
 
 .post-item h2 a {
-    color: inherit;
-    text-decoration: none;
+    color: var(--accent-strong);
+    text-underline-offset: 0.15em;
 }
 
 .post-item h2 a:hover { color: var(--accent); }
