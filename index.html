@@ -6,18 +6,50 @@
     <meta name="description" content="Songtao Li's Personal Website - Communications Engineering Student at Northeastern University, specializing in Blockchain, Federated Learning, and Machine Learning">
     <meta name="keywords" content="Songtao Li, Communications Engineering, Blockchain, Federated Learning, Machine Learning, Mathematical Modeling">
     <meta name="author" content="Songtao Li">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f3f0e8">
     <title>Songtao Li: Personal Portfolio</title>
+    <link rel="canonical" href="https://www.lisongtao.eu.org/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Songtao Li">
+    <meta property="og:url" content="https://www.lisongtao.eu.org/">
+    <meta property="og:title" content="Songtao Li: Personal Portfolio">
+    <meta property="og:description" content="Songtao Li's Personal Website - Communications Engineering Student at Northeastern University, specializing in Blockchain, Federated Learning, and Machine Learning">
+    <meta property="og:image" content="https://www.lisongtao.eu.org/images/photo.jpg">
+    <meta property="og:image:alt" content="Portrait of Songtao Li">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Songtao Li: Personal Portfolio">
+    <meta name="twitter:description" content="Songtao Li's Personal Website - Communications Engineering Student at Northeastern University, specializing in Blockchain, Federated Learning, and Machine Learning">
+    <meta name="twitter:image" content="https://www.lisongtao.eu.org/images/photo.jpg">
+    <meta name="twitter:image:alt" content="Portrait of Songtao Li">
     <link rel="preload" href="css/styles.css" as="style">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" href="images/icon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <script>
+    (function () {
+        try {
+            var stored = localStorage.getItem('theme');
+            var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (stored === 'dark' || stored === 'light') {
+                document.documentElement.setAttribute('data-theme', stored);
+            }
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta && dark) meta.setAttribute('content', '#14181f');
+        } catch (e) {}
+    })();
+    </script>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
-      "@context": "http://schema.org",
+      "@context": "https://schema.org",
       "@type": "Person",
       "name": "Songtao Li",
-      "url": "http://lisongtao.eu.org",
+      "url": "https://www.lisongtao.eu.org",
       "jobTitle": "Student",
+      "image": "https://www.lisongtao.eu.org/images/photo.jpg",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
         "name": "Northeastern University",
@@ -53,11 +85,16 @@
     </script>
 </head>
 <body>
+    <a class="skip-link" href="#content-placeholder">Skip to content</a>
     <div id="navbar-placeholder"></div>
-    <div id="content-placeholder"></div>
-    <div id="loading" style="display: none;">Loading...</div>
+    <main id="content-placeholder" tabindex="-1"></main>
+    <div id="loading" role="status" aria-live="polite" hidden>Loading...</div>
+    <noscript>
+        <div class="container">
+            <p class="error-message">This website needs JavaScript to display its pages.</p>
+        </div>
+    </noscript>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
     <script src="js/scripts.js" defer></script>
 </body>
 </html>
