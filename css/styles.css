@@ -384,11 +384,15 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 
 .achievements h2,
 .honors h2,
-.resume-item h3,
+.resume-item h2,
 .post-detail h1 {
     margin: 0 0 0.95rem;
     padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--line);
+}
+
+.resume-item h2 {
+    font-size: 1.17em;
 }
 
 .achievements ul,
