@@ -6,21 +6,28 @@
     <meta name="description" content="Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI">
     <meta name="keywords" content="Songtao Li, PhD, The Hong Kong Polytechnic University, PolyU, Large Language Models, Interpretability, Data-Centric AI">
     <meta name="author" content="Songtao Li">
+    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="shqscMoQB9y_7zGeN6nEwFwJpYUC8tpuNc1AmfvPwps" />
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#f3f0e8">
-    <title>Songtao Li: Personal Portfolio</title>
+    <title>Songtao Li | PhD Student, The Hong Kong Polytechnic University</title>
     <link rel="canonical" href="https://www.lisongtao.eu.org/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.lisongtao.eu.org/sitemap.xml">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Songtao Li">
     <meta property="og:url" content="https://www.lisongtao.eu.org/">
-    <meta property="og:title" content="Songtao Li: Personal Portfolio">
+    <meta property="og:title" content="Songtao Li | PhD Student, The Hong Kong Polytechnic University">
     <meta property="og:description" content="Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI">
     <meta property="og:image" content="https://www.lisongtao.eu.org/images/photo.jpg">
     <meta property="og:image:alt" content="Portrait of Songtao Li">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="1157">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Songtao Li: Personal Portfolio">
+    <meta name="twitter:title" content="Songtao Li | PhD Student, The Hong Kong Polytechnic University">
     <meta name="twitter:description" content="Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI">
+    <meta name="twitter:url" content="https://www.lisongtao.eu.org/">
     <meta name="twitter:image" content="https://www.lisongtao.eu.org/images/photo.jpg">
     <meta name="twitter:image:alt" content="Portrait of Songtao Li">
     <link rel="preload" href="css/styles.css" as="style">
@@ -45,34 +52,93 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Songtao Li",
-      "url": "https://www.lisongtao.eu.org",
-      "jobTitle": "PhD Student",
-      "image": "https://www.lisongtao.eu.org/images/photo.jpg",
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Northeastern University",
-        "location": {
-          "@type": "Place",
-          "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "China"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.lisongtao.eu.org/#website",
+          "name": "Songtao Li",
+          "url": "https://www.lisongtao.eu.org/",
+          "inLanguage": "en",
+          "description": "Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI",
+          "publisher": {
+            "@id": "https://www.lisongtao.eu.org/#person"
+          },
+          "hasPart": [
+            {
+              "@id": "https://www.lisongtao.eu.org/#publications"
+            },
+            {
+              "@id": "https://www.lisongtao.eu.org/#about"
+            }
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.lisongtao.eu.org/#person",
+          "name": "Songtao Li",
+          "alternateName": "Li Songtao",
+          "url": "https://www.lisongtao.eu.org/",
+          "jobTitle": "PhD Student",
+          "description": "PhD student at The Hong Kong Polytechnic University (PolyU)",
+          "image": "https://www.lisongtao.eu.org/images/photo.jpg",
+          "affiliation": {
+            "@type": "CollegeOrUniversity",
+            "name": "The Hong Kong Polytechnic University",
+            "alternateName": "PolyU"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Northeastern University",
+            "location": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "China"
+              }
+            }
+          },
+          "sameAs": [
+            "https://github.com/xiaoxiaoxiaotao",
+            "https://www.linkedin.com/in/songtao-li-a0a757274/"
+          ],
+          "knowsAbout": [
+            "Large Language Models",
+            "Useful and Practical Interpretability",
+            "Data-Centric AI"
+          ],
+          "award": [
+            "National Scholarship (December 2023)"
+          ],
+          "subjectOf": {
+            "@id": "https://www.lisongtao.eu.org/#publications"
           }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.lisongtao.eu.org/#publications",
+          "name": "Publications",
+          "url": "https://www.lisongtao.eu.org/#publications",
+          "isPartOf": {
+            "@id": "https://www.lisongtao.eu.org/#website"
+          },
+          "about": {
+            "@id": "https://www.lisongtao.eu.org/#person"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.lisongtao.eu.org/#about",
+          "name": "About",
+          "url": "https://www.lisongtao.eu.org/#about",
+          "isPartOf": {
+            "@id": "https://www.lisongtao.eu.org/#website"
+          },
+          "about": {
+            "@id": "https://www.lisongtao.eu.org/#person"
+          },
+          "inLanguage": "en"
         }
-      },
-      "description": "PhD student at The Hong Kong Polytechnic University (PolyU)",
-      "sameAs": [
-        "https://github.com/xiaoxiaoxiaotao",
-        "https://www.linkedin.com/in/songtao-li-a0a757274/"
-      ],
-      "knowsAbout": [
-        "Large Language Models",
-        "Useful and Practical Interpretability",
-        "Data-Centric AI"
-      ],
-      "award": [
-        "National Scholarship (December 2023)"
       ]
     }
     </script>

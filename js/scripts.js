@@ -232,9 +232,12 @@ async function navigateTo(page, options = {}) {
         content.innerHTML = html;
         setActiveNav(page);
 
-        document.title = page === 'home'
-            ? 'Songtao Li: Personal Portfolio'
-            : `${page.charAt(0).toUpperCase() + page.slice(1)} - Songtao Li`;
+        const pageTitles = {
+            home: 'Songtao Li | PhD Student, The Hong Kong Polytechnic University',
+            publications: 'Publications | Songtao Li',
+            about: 'About | Songtao Li'
+        };
+        document.title = pageTitles[page] || 'Songtao Li';
 
         if (page === 'publications') {
             await loadPublications();
