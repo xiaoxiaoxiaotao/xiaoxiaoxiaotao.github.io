@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         handleError(error);
     } finally {
         toggleLoading(false);
-        document.documentElement.removeAttribute('data-booting');
     }
 });
 
@@ -265,10 +264,7 @@ async function navigateTo(page, options = {}) {
     } catch (error) {
         if (token === navToken) handleError(error);
     } finally {
-        if (token === navToken) {
-            toggleLoading(false);
-            document.documentElement.removeAttribute('data-booting');
-        }
+        if (token === navToken) toggleLoading(false);
     }
 }
 
