@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI">
-    <meta name="keywords" content="Songtao Li, PhD, The Hong Kong Polytechnic University, PolyU, Large Language Models, Interpretability, Data-Centric AI">
+    <meta name="description" content="Songtao Li (Li Songtao) is a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU). Research interests include large language models, practical interpretability, and data-centric AI.">
+    <meta name="keywords" content="Songtao Li, Li Songtao, PolyU, Department of Computing, The Hong Kong Polytechnic University, PhD, Large Language Models, Interpretability, Data-Centric AI">
     <meta name="author" content="Songtao Li">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="shqscMoQB9y_7zGeN6nEwFwJpYUC8tpuNc1AmfvPwps" />
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#f3f0e8">
-    <title>Songtao Li | PhD Student, The Hong Kong Polytechnic University</title>
+    <title>Songtao Li | PhD Student, PolyU Department of Computing</title>
     <link rel="canonical" href="https://www.lisongtao.eu.org/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.lisongtao.eu.org/sitemap.xml">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Songtao Li">
     <meta property="og:url" content="https://www.lisongtao.eu.org/">
-    <meta property="og:title" content="Songtao Li | PhD Student, The Hong Kong Polytechnic University">
-    <meta property="og:description" content="Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI">
+    <meta property="og:title" content="Songtao Li | PhD Student, PolyU Department of Computing">
+    <meta property="og:description" content="Songtao Li (Li Songtao) is a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU). Research interests include large language models, practical interpretability, and data-centric AI.">
     <meta property="og:image" content="https://www.lisongtao.eu.org/images/photo.jpg">
     <meta property="og:image:alt" content="Portrait of Songtao Li">
     <meta property="og:image:type" content="image/jpeg">
@@ -25,8 +25,8 @@
     <meta property="og:image:height" content="1157">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Songtao Li | PhD Student, The Hong Kong Polytechnic University">
-    <meta name="twitter:description" content="Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI">
+    <meta name="twitter:title" content="Songtao Li | PhD Student, PolyU Department of Computing">
+    <meta name="twitter:description" content="Songtao Li (Li Songtao) is a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU). Research interests include large language models, practical interpretability, and data-centric AI.">
     <meta name="twitter:url" content="https://www.lisongtao.eu.org/">
     <meta name="twitter:image" content="https://www.lisongtao.eu.org/images/photo.jpg">
     <meta name="twitter:image:alt" content="Portrait of Songtao Li">
@@ -45,6 +45,10 @@
             }
             var meta = document.querySelector('meta[name="theme-color"]');
             if (meta && dark) meta.setAttribute('content', '#14181f');
+            var hash = (location.hash || '').replace(/^#/, '').split('/')[0];
+            if (hash === 'about' || hash === 'publications') {
+                document.documentElement.setAttribute('data-booting', 'deep');
+            }
         } catch (e) {}
     })();
     </script>
@@ -57,13 +61,20 @@
           "@type": "WebSite",
           "@id": "https://www.lisongtao.eu.org/#website",
           "name": "Songtao Li",
+          "alternateName": "Li Songtao",
           "url": "https://www.lisongtao.eu.org/",
           "inLanguage": "en",
-          "description": "Songtao Li's Personal Website - PhD student at The Hong Kong Polytechnic University (PolyU), interested in large language models, practical interpretability, and data-centric AI",
+          "description": "Songtao Li (Li Songtao) is a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU). Research interests include large language models, practical interpretability, and data-centric AI.",
           "publisher": {
             "@id": "https://www.lisongtao.eu.org/#person"
           },
+          "about": {
+            "@id": "https://www.lisongtao.eu.org/#person"
+          },
           "hasPart": [
+            {
+              "@id": "https://www.lisongtao.eu.org/#home"
+            },
             {
               "@id": "https://www.lisongtao.eu.org/#publications"
             },
@@ -73,18 +84,49 @@
           ]
         },
         {
+          "@type": "ProfilePage",
+          "@id": "https://www.lisongtao.eu.org/#home",
+          "url": "https://www.lisongtao.eu.org/",
+          "name": "Songtao Li | PhD Student, PolyU Department of Computing",
+          "description": "Songtao Li (Li Songtao) is a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).",
+          "isPartOf": {
+            "@id": "https://www.lisongtao.eu.org/#website"
+          },
+          "about": {
+            "@id": "https://www.lisongtao.eu.org/#person"
+          },
+          "mainEntity": {
+            "@id": "https://www.lisongtao.eu.org/#person"
+          },
+          "inLanguage": "en",
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://www.lisongtao.eu.org/images/photo.jpg",
+            "caption": "Portrait of Songtao Li"
+          }
+        },
+        {
           "@type": "Person",
           "@id": "https://www.lisongtao.eu.org/#person",
           "name": "Songtao Li",
-          "alternateName": "Li Songtao",
+          "givenName": "Songtao",
+          "familyName": "Li",
+          "alternateName": ["Li Songtao", "Songtao Li"],
           "url": "https://www.lisongtao.eu.org/",
           "jobTitle": "PhD Student",
-          "description": "PhD student at The Hong Kong Polytechnic University (PolyU)",
+          "description": "PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).",
           "image": "https://www.lisongtao.eu.org/images/photo.jpg",
           "affiliation": {
-            "@type": "CollegeOrUniversity",
-            "name": "The Hong Kong Polytechnic University",
-            "alternateName": "PolyU"
+            "@type": "Organization",
+            "name": "Department of Computing, The Hong Kong Polytechnic University",
+            "alternateName": "PolyU Department of Computing",
+            "url": "https://www.polyu.edu.hk/comp/",
+            "parentOrganization": {
+              "@type": "CollegeOrUniversity",
+              "name": "The Hong Kong Polytechnic University",
+              "alternateName": "PolyU",
+              "url": "https://www.polyu.edu.hk/"
+            }
           },
           "alumniOf": {
             "@type": "CollegeOrUniversity",
@@ -116,7 +158,8 @@
         {
           "@type": "WebPage",
           "@id": "https://www.lisongtao.eu.org/#publications",
-          "name": "Publications",
+          "name": "Publications by Songtao Li",
+          "description": "Publications by Songtao Li, PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).",
           "url": "https://www.lisongtao.eu.org/#publications",
           "isPartOf": {
             "@id": "https://www.lisongtao.eu.org/#website"
@@ -129,7 +172,8 @@
         {
           "@type": "WebPage",
           "@id": "https://www.lisongtao.eu.org/#about",
-          "name": "About",
+          "name": "About Songtao Li",
+          "description": "About Songtao Li (Li Songtao), PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).",
           "url": "https://www.lisongtao.eu.org/#about",
           "isPartOf": {
             "@id": "https://www.lisongtao.eu.org/#website"
@@ -146,11 +190,49 @@
 <body>
     <a class="skip-link" href="#content-placeholder">Skip to content</a>
     <div id="navbar-placeholder"></div>
-    <main id="content-placeholder" tabindex="-1"></main>
+    <main id="content-placeholder" tabindex="-1">
+        <!-- Static copy of components/home.html so the name and affiliation are in the first HTML response. Keep in sync. -->
+        <div class="container container-narrow">
+            <h1 class="page-title">Songtao Li</h1>
+            <div class="profile-intro">
+                <p>
+                    Hello! I'm Songtao Li (Li Songtao), a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).
+                </p>
+                <p>My research interests include:</p>
+                <ul class="interest-list">
+                    <li>Large Language Models</li>
+                    <li>Useful and Practical Interpretability</li>
+                    <li>Data-Centric AI</li>
+                </ul>
+                <p>
+                    I'm passionate about solving complex problems through innovative technologies and mathematical approaches. Check out my <a href="#publications" onclick="navigateTo('publications'); return false;">publications</a> to learn more about my research work.
+                </p>
+            </div>
+            <div class="achievements">
+                <h2>News</h2>
+                <ul>
+                    <li><strong>September 2026:</strong> Joined the Department of Computing at The Hong Kong Polytechnic University (PolyU) as a PhD student</li>
+                </ul>
+            </div>
+            <div class="honors">
+                <h2>Honors & Awards</h2>
+                <ul>
+                    <li><strong>National Scholarship</strong> (December 2023)</li>
+                </ul>
+            </div>
+            <footer>
+                <p>© 2024 Songtao Li. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="https://github.com/xiaoxiaoxiaotao" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/songtao-li-a0a757274/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+            </footer>
+        </div>
+    </main>
     <div id="loading" role="status" aria-live="polite" hidden>Loading...</div>
     <noscript>
         <div class="container">
-            <p class="error-message">This website needs JavaScript to display its pages.</p>
+            <p class="error-message">Navigation between pages needs JavaScript.</p>
         </div>
     </noscript>
 

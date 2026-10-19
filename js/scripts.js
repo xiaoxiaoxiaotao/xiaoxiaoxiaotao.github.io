@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         handleError(error);
     } finally {
         toggleLoading(false);
+        document.documentElement.removeAttribute('data-booting');
     }
 });
 
@@ -233,9 +234,9 @@ async function navigateTo(page, options = {}) {
         setActiveNav(page);
 
         const pageTitles = {
-            home: 'Songtao Li | PhD Student, The Hong Kong Polytechnic University',
-            publications: 'Publications | Songtao Li',
-            about: 'About | Songtao Li'
+            home: 'Songtao Li | PhD Student, PolyU Department of Computing',
+            publications: 'Publications | Songtao Li, PolyU Department of Computing',
+            about: 'About Songtao Li | PolyU Department of Computing'
         };
         document.title = pageTitles[page] || 'Songtao Li';
 
@@ -264,7 +265,10 @@ async function navigateTo(page, options = {}) {
     } catch (error) {
         if (token === navToken) handleError(error);
     } finally {
-        if (token === navToken) toggleLoading(false);
+        if (token === navToken) {
+            toggleLoading(false);
+            document.documentElement.removeAttribute('data-booting');
+        }
     }
 }
 

@@ -150,6 +150,8 @@ a:hover { text-decoration-thickness: 2px; }
 #content-placeholder:focus,
 #main:focus { outline: none; }
 
+html[data-booting="deep"] #content-placeholder { visibility: hidden; }
+
 /* Navigation */
 .navbar {
     position: sticky;
