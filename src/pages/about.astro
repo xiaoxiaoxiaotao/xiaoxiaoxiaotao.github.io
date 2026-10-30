@@ -9,7 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   current="about"
 >
   <main id="main" tabindex="-1">
-    <div class="container">
+    <div class="container container-narrow">
       <section class="profile-section">
         <div class="profile-layout">
           <div class="profile-photo">
@@ -30,9 +30,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="resume-section">
         <div class="resume-item">
           <h2>Education</h2>
-          <ul>
-            <li>Sep 2026 – present: PhD student, Department of Computing, The Hong Kong Polytechnic University (PolyU), supervised by <a href="https://ninghaohello.github.io/" target="_blank" rel="noopener noreferrer">Ninghao Liu</a>.</li>
-            <li>Sep 2022 – Jul 2026: Bachelor of Engineering, Sydney Smart Technology College, Northeastern University (China).</li>
+          <ol class="education-list">
+            <li>
+              <p class="education-when">Sep 2026 – present</p>
+              <div class="education-body">
+                <p class="education-degree">PhD student</p>
+                <p class="education-place">Department of Computing, The Hong Kong Polytechnic University (PolyU)</p>
+                <p class="education-meta">Supervised by <a href="https://ninghaohello.github.io/" target="_blank" rel="noopener noreferrer">Ninghao Liu</a></p>
+              </div>
+            </li>
+            <li>
+              <p class="education-when">Sep 2022 – Jul 2026</p>
+              <div class="education-body">
+                <p class="education-degree">Bachelor of Engineering</p>
+                <p class="education-place">Sydney Smart Technology College, Northeastern University (China)</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="resume-item">
+          <h2>Interests</h2>
+          <ul class="interest-list">
+            <li>Chinese chess</li>
+            <li>jogging</li>
+            <li>traveling</li>
           </ul>
         </div>
       </div>
