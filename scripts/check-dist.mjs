@@ -45,7 +45,10 @@ must(pubs.includes('https://doi.org/10.1038/s41598-025-33685-1'), 'second doi li
 must(pubs.includes('<strong class="author-self">Songtao Li</strong>'), 'author bold missing');
 must(pubs.includes('Hao Tang'), 'coauthor missing');
 must(about.includes("Hello! I'm Li Songtao, a PhD student at The Hong Kong Polytechnic University (PolyU), Department of Computing."), 'about copy missing');
-must(about.includes('CET6-579, IELTS 6.5'), 'languages line missing');
+must(about.includes('Sep 2026 – present: PhD student, Department of Computing, The Hong Kong Polytechnic University (PolyU), supervised by'), 'phd education line missing');
+must(about.includes('https://ninghaohello.github.io/'), 'supervisor link missing');
+must(about.includes('Sep 2022 – Jul 2026: Bachelor of Engineering, Sydney Smart Technology College, Northeastern University (China).'), 'bachelor education line missing');
+must(!about.includes('Additional Information'), 'additional information section still present');
 must(cname === 'www.lisongtao.eu.org', `unexpected CNAME: ${cname}`);
 must(sitemap.includes('https://www.lisongtao.eu.org/publications/'), 'sitemap publications path missing');
 must(sitemap.includes('https://www.lisongtao.eu.org/about/'), 'sitemap about path missing');
