@@ -372,8 +372,6 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
     padding: 0;
 }
 
-.resume-item .interest-list { margin: 0; }
-
 .interest-list li {
     display: inline-flex;
     align-items: center;
@@ -398,6 +396,8 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 .resume-item h2 {
     font-size: 1.17em;
 }
+
+.resume-item > p { margin: 0; }
 
 .achievements ul,
 .honors ul {

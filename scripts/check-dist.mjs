@@ -55,7 +55,9 @@ must(about.includes('https://ninghaohello.github.io/'), 'supervisor link missing
 must(about.includes('Sep 2022 – Jul 2026'), 'bachelor dates missing');
 must(about.includes('Bachelor of Engineering'), 'bachelor degree missing');
 must(about.includes('Sydney Smart Technology College, Northeastern University (China)'), 'bachelor school missing');
-must(about.includes('>Chinese chess<') && about.includes('>jogging<') && about.includes('>traveling<'), 'interests missing');
+must(about.includes('Chinese chess, jogging, traveling'), 'interests missing');
+must(!about.includes('class="interest-list"'), 'interests still use pills');
+must(about.includes('Prof. Ninghao Liu'), 'supervisor wording changed');
 must(!about.includes('Additional Information'), 'additional information heading restored');
 must(!about.includes('CET6-579') && !about.includes('IELTS'), 'language line restored');
 must(!about.includes('Programming:') && !about.includes('Pytorch') && !about.includes('MS Office'), 'tools line restored');
