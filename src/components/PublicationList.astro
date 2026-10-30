@@ -1,0 +1,36 @@
+---
+import data from '../../posts/publications.json';
+
+const OWNER = 'Songtao Li';
+const doiPattern = /^10\.\d{4,9}\/\S+$/;
+
+function doiHref(doi: string | undefined) {
+  const value = String(doi ?? '').trim();
+  if (!doiPattern.test(value)) return '';
+  return `https://doi.org/${value}`;
+}
+---
+
+<div class="posts-list" id="publications-list">
+  {
+    data.publications.map((pub) => {
+      const href = doiHref(pub.doi);
+      const parts = pub.authors.split(OWNER);
+      return (
+        <article class="post-item">
+          <h2>
+            {href ? <a href={href} target="_blank" rel="noopener noreferrer">{pub.title}</a> : pub.title}
+          </h2>
+          <p class="post-authors">
+            {parts.map((part, index) => (
+              <>
+                {part}
+                {index < parts.length - 1 && <strong class="author-self">{OWNER}</strong>}
+              </>
+            ))}
+          </p>
+        </article>
+      );
+    })
+  }
+</div>
