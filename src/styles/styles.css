@@ -515,30 +515,40 @@ footer {
 
 footer p { margin: 0 0 0.35rem; font-size: 0.92rem; }
 
+.page-title + .social-links {
+    margin-top: -0.5rem;
+    margin-bottom: 1.15rem;
+}
+
 .social-links {
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.55rem;
 }
 
 .social-links a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    padding: 0.35rem 0.95rem;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--surface);
-    color: var(--accent-strong);
+    color: var(--ink);
     text-decoration: none;
-    font-weight: 600;
 }
 
 .social-links a:hover {
     background: var(--accent-soft);
+    color: var(--accent-strong);
     text-decoration: none;
+}
+
+.social-links svg {
+    display: block;
 }
 
 /* Publications */
