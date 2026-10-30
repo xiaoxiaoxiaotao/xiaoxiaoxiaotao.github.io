@@ -58,18 +58,8 @@ Publication entries keep the same fields as before (`title`, `authors`, `doi`, a
 This repository is a user site. Pages must publish the **built** `dist/` directory, not the Astro source on `main`.
 
 1. In the repository, open **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**. Do not switch it back to **Deploy from a branch** at the repository root. That publishes the Astro source instead of the built site.
 3. Merge to `main`. The workflow `.github/workflows/pages.yml` runs `npm ci`, `npm run build`, checks the output, and deploys `dist/`.
 4. Leave `public/CNAME` as `www.lisongtao.eu.org`. The custom domain setting should stay on that host.
 
 Pull requests only build and check. They do not deploy.
-
-## 构建与部署
-
-```bash
-npm ci
-npm run build    # 静态文件输出到 dist/
-npm run preview  # 本地预览构建结果
-```
-
-合并到 `main` 后，GitHub Actions 会把 `dist/` 部署到 GitHub Pages。仓库 **Settings → Pages** 的 Source 需要选 **GitHub Actions**（不要再从分支根目录直接发布，否则会发布 Astro 源码而不是站点）。自定义域名仍由 `public/CNAME`（`www.lisongtao.eu.org`）保持。
