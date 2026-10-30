@@ -375,6 +375,8 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 .resume-item .interest-list { margin: 0; }
 
 .interest-list li {
+    display: inline-flex;
+    align-items: center;
     background: var(--accent-soft);
     color: var(--accent-strong);
     border-radius: 999px;
@@ -624,6 +626,7 @@ footer p { margin: 0 0 0.35rem; font-size: 0.92rem; }
 
 .post-item h2 a {
     color: var(--accent-strong);
+    text-decoration: none;
     text-underline-offset: 0.15em;
 }
 
