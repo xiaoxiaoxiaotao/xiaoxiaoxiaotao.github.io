@@ -1,0 +1,50 @@
+import { readFileSync, existsSync } from 'node:fs';
+
+const read = (path) => readFileSync(path, 'utf8');
+const must = (cond, message) => {
+  if (!cond) {
+    console.error(message);
+    process.exitCode = 1;
+  }
+};
+
+must(existsSync('dist/index.html'), 'missing dist/index.html');
+must(existsSync('dist/publications/index.html'), 'missing dist/publications/index.html');
+must(existsSync('dist/about/index.html'), 'missing dist/about/index.html');
+must(existsSync('dist/404.html'), 'missing dist/404.html');
+must(existsSync('dist/CNAME'), 'missing dist/CNAME');
+must(existsSync('dist/sitemap.xml'), 'missing dist/sitemap.xml');
+must(existsSync('dist/robots.txt'), 'missing dist/robots.txt');
+must(existsSync('dist/images/photo.jpg'), 'missing portrait');
+
+const home = read('dist/index.html');
+const pubs = read('dist/publications/index.html');
+const about = read('dist/about/index.html');
+const sitemap = read('dist/sitemap.xml');
+const cname = read('dist/CNAME').trim();
+
+must(home.includes("Welcome to Songtao Li's Personal Website"), 'home title copy missing');
+must(home.includes('Hello! I\'m a PhD student at The Hong Kong Polytechnic University (PolyU).'), 'home intro missing');
+must(home.includes('Large Language Models'), 'interest missing');
+must(home.includes('September 2026:'), 'news missing');
+must(home.includes('National Scholarship'), 'honor missing');
+must(home.includes('© 2024 Songtao Li. All rights reserved.'), 'footer missing');
+must(home.includes('shqscMoQB9y_7zGeN6nEwFwJpYUC8tpuNc1AmfvPwps'), 'google verification missing');
+must(home.includes('application/ld+json'), 'json-ld missing');
+must(pubs.includes('Multimodal Alignment and Fusion: A Survey'), 'survey title missing');
+must(pubs.includes('https://doi.org/10.1007/s11263-025-02667-1'), 'survey doi link missing');
+must(pubs.includes('DA34FL: A Robust Dynamic Accumulator-based Authentication and Key Agreement with Preserving Model Training Data Integrity for Federated Learning'), 'second title missing');
+must(pubs.includes('https://doi.org/10.1038/s41598-025-33685-1'), 'second doi link missing');
+must(pubs.includes('<strong class="author-self">Songtao Li</strong>'), 'author bold missing');
+must(pubs.includes('Hao Tang'), 'coauthor missing');
+must(about.includes("Hello! I'm Li Songtao, a PhD student at The Hong Kong Polytechnic University (PolyU), Department of Computing."), 'about copy missing');
+must(about.includes('CET6-579, IELTS 6.5'), 'languages line missing');
+must(cname === 'www.lisongtao.eu.org', `unexpected CNAME: ${cname}`);
+must(sitemap.includes('https://www.lisongtao.eu.org/publications/'), 'sitemap publications path missing');
+must(sitemap.includes('https://www.lisongtao.eu.org/about/'), 'sitemap about path missing');
+must(!sitemap.includes('/#publications'), 'sitemap still lists hash publications URL');
+must(!sitemap.includes('/#about'), 'sitemap still lists hash about URL');
+must(!home.includes('This website needs JavaScript'), 'stale noscript message still present');
+
+if (process.exitCode) process.exit(process.exitCode);
+console.log('dist checks passed');

@@ -1,0 +1,48 @@
+---
+interface Props {
+  current: 'home' | 'publications' | 'about' | 'none';
+}
+
+const { current } = Astro.props;
+
+const links = [
+  { href: '/', id: 'home', label: 'Home' },
+  { href: '/publications/', id: 'publications', label: 'Publications' },
+  { href: '/about/', id: 'about', label: 'About Me' },
+];
+---
+
+<nav class="navbar" aria-label="Primary">
+  <div class="nav-bar">
+    <a class="nav-brand" href="/">Songtao Li</a>
+    <ul id="nav-menu" class="nav-menu">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} class:list={[{ active: current === link.id }]} aria-current={current === link.id ? 'page' : undefined}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="nav-tools">
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+          <path fill="currentColor" d="M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5z"></path>
+        </svg>
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+          <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"></path>
+          </g>
+        </svg>
+      </button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+        <span class="nav-toggle-icon" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</nav>

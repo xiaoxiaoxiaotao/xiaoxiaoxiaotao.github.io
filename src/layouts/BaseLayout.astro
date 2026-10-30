@@ -1,0 +1,177 @@
+---
+import '../styles/styles.css';
+import Navbar from '../components/Navbar.astro';
+import { jsonLd, siteDescription } from '../lib/jsonld';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  robots?: string;
+  current: 'home' | 'publications' | 'about' | 'none';
+  jsonLd?: boolean;
+}
+
+const {
+  title,
+  description = siteDescription,
+  canonicalPath = '/',
+  robots = 'index, follow',
+  current,
+  jsonLd: includeJsonLd = true,
+} = Astro.props;
+
+const site = 'https://www.lisongtao.eu.org';
+const canonical = new URL(canonicalPath, site).href;
+const keywords =
+  'Songtao Li, Li Songtao, PolyU, Department of Computing, The Hong Kong Polytechnic University, PhD, Large Language Models, Interpretability, Data-Centric AI';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {description && <meta name="description" content={description} />}
+    {includeJsonLd && <meta name="keywords" content={keywords} />}
+    <meta name="author" content="Songtao Li" />
+    <meta name="robots" content={robots} />
+    <meta name="google-site-verification" content="shqscMoQB9y_7zGeN6nEwFwJpYUC8tpuNc1AmfvPwps" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f3f0e8" />
+    <title>{title}</title>
+    {includeJsonLd && <link rel="canonical" href={canonical} />}
+    <link rel="sitemap" type="application/xml" title="Sitemap" href={`${site}/sitemap.xml`} />
+    {
+      includeJsonLd && (
+        <>
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="Songtao Li" />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image" content={`${site}/images/photo.jpg`} />
+          <meta property="og:image:alt" content="Portrait of Songtao Li" />
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="800" />
+          <meta property="og:image:height" content="1157" />
+          <meta property="og:locale" content="en_US" />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:url" content={canonical} />
+          <meta name="twitter:image" content={`${site}/images/photo.jpg`} />
+          <meta name="twitter:image:alt" content="Portrait of Songtao Li" />
+        </>
+      )
+    }
+    <link rel="icon" href="/images/favicon.ico" sizes="any" />
+    <link rel="icon" href="/images/icon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <script is:inline>
+      (function () {
+        var routes = { home: '/', publications: '/publications/', about: '/about/' };
+        var hash = (location.hash || '').replace(/^#/, '').split('/')[0];
+        var target = routes[hash];
+        if (target) {
+          var path = location.pathname;
+          if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1);
+          if (path === '/index.html') path = '/';
+          var normalized = target === '/' ? '/' : target.replace(/\/$/, '');
+          if (path !== normalized) {
+            location.replace(target);
+            return;
+          }
+          if (location.hash) history.replaceState(null, '', target);
+        }
+        try {
+          var stored = localStorage.getItem('theme');
+          var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || stored === 'light') {
+            document.documentElement.setAttribute('data-theme', stored);
+          }
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta && dark) meta.setAttribute('content', '#14181f');
+        } catch (e) {}
+      })();
+    </script>
+    {
+      includeJsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Navbar current={current} />
+    <slot />
+    <script>
+      function resolvedTheme() {
+        const explicit = document.documentElement.getAttribute('data-theme');
+        if (explicit === 'dark' || explicit === 'light') return explicit;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function syncThemeControls(theme: string) {
+        const button = document.querySelector('.theme-toggle');
+        if (button) {
+          button.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        }
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#14181f' : '#f3f0e8');
+      }
+
+      function closeMobileNav() {
+        document.body.classList.remove('nav-open');
+        const toggle = document.querySelector('.nav-toggle');
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Open menu');
+        }
+      }
+
+      const toggle = document.querySelector('.nav-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const open = document.body.classList.toggle('nav-open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        });
+      }
+
+      const themeButton = document.querySelector('.theme-toggle');
+      syncThemeControls(resolvedTheme());
+      if (themeButton) {
+        themeButton.addEventListener('click', () => {
+          const next = resolvedTheme() === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+          syncThemeControls(next);
+        });
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMobileNav();
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!document.body.classList.contains('nav-open')) return;
+        const target = event.target;
+        if (target instanceof Element && target.closest('.navbar')) return;
+        closeMobileNav();
+      });
+
+      const media = window.matchMedia('(prefers-color-scheme: dark)');
+      const onSchemeChange = () => {
+        let stored: string | null = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch (e) {}
+        if (!stored) syncThemeControls(resolvedTheme());
+      };
+      if (media.addEventListener) media.addEventListener('change', onSchemeChange);
+    </script>
+  </body>
+</html>

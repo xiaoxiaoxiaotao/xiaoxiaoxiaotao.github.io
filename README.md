@@ -1,103 +1,75 @@
-# Personal Resume & Portfolio Website Template
+# Songtao Li — personal site
 
-This project is a clean, responsive, and data-driven personal website template designed for researchers, students, and developers. It features a Single Page Application (SPA) experience using vanilla JavaScript, making it lightweight and easy to deploy on any static hosting service like GitHub Pages.
+Static personal site for [www.lisongtao.eu.org](https://www.lisongtao.eu.org/), built with [Astro](https://astro.build/) and deployed to GitHub Pages.
 
-> **Live Demo:** [https://www.lisongtao.eu.org/#home](https://www.lisongtao.eu.org/#home)
+Visible copy lives in `src/pages/`. Publications are rendered from `posts/publications.json`. Paper titles link to `https://doi.org/…` when the DOI matches the existing pattern, and the name **Songtao Li** is bold in the author line.
 
-## Features
-
-- **Single Page Application (SPA)**: Smooth page transitions without full reloads using the History API.
-- **Data-Driven Publications**: Manage your publications list easily via a JSON file.
-- **Component-Based Architecture**: Separation of concerns with HTML fragments for Navbar, Home, About, etc.
-- **Responsive Design**: Mobile-friendly layout using standard CSS.
-- **SEO Friendly**: Includes `application/ld+json` structured data for search engines.
-- **Zero Dependencies**: Pure HTML, CSS, and JavaScript. No build step or frameworks required.
-
-## Project Structure
-
-```
-├── components/          # HTML fragments for different pages/sections
-│   ├── about.html       # "About" section content
-│   ├── home.html        # Homepage content
-│   ├── navbar.html      # Navigation bar structure
-│   └── publications.html# Container for the publications list
-├── css/
-│   └── styles.css       # Global styles
-├── images/              # Images and icons (favicon, etc.)
-├── js/
-│   └── scripts.js       # Main logic for routing and data loading
-├── posts/
-│   └── publications.json # Data file for publications
-├── index.html           # Main entry point and SEO metadata
-└── README.md            # This file
-```
-
-## How to Run Locally
-
-Since this project fetches HTML components using JavaScript, it requires a local web server to avoid CORS (Cross-Origin Resource Sharing) errors specific to the `file://` protocol.
-
-### Option 1: VS Code Live Server (Recommended)
-1. Install the "Live Server" extension in VS Code.
-2. Right-click `index.html` and select "Open with Live Server".
-
-### Option 2: Python HTTP Server
-If you have Python installed, run one of the following commands in the project root:
+## Build
 
 ```bash
-# Python 3
-python3 -m http.server 8000
+npm ci
+npm run build
+npm run check
 ```
-Then visit `http://localhost:8000` in your browser.
 
-## Customization Guide
+`npm run build` writes the static site to `dist/` (`output: 'static'`). `public/CNAME` is copied through so the custom domain stays `www.lisongtao.eu.org`.
 
-Follow these steps to make this website your own.
+Preview the build locally:
 
-### 1. Basic Information & SEO
-Open `index.html` and update the following:
-- `<title>` tag.
-- `<meta name="description">` and `<meta name="keywords">`.
-- The `application/ld+json` script block. Update the `name`, `url`, `alumniOf`, and other personal details to match your profile.
-
-### 2. Website Content
-Edit the HTML files in the `components/` folder to change what is displayed on each page:
-- **Home**: Edit `components/home.html`.
-- **About**: Edit `components/about.html`.
-- **Navigation Links**: if you want to add pages, update `components/navbar.html` and update the routing logic in `js/scripts.js` if necessary.
-
-### 3. Publications
-You don't need to write HTML for each publication. Just edit `posts/publications.json`.
-Add or Modify entries in the `publications` array:
-
-```json
-{
-    "id": "unique-id",
-    "title": "Your Paper Title",
-    "authors": "Your Name, Co-authors...",
-    "venue": "Conference/Journal Name",
-    "year": "2024",
-    "status": "published", // or "accepted"
-    "doi": "10.xxxx/xxxxx",
-    "url": "https://link-to-paper",
-    "abstract": "Brief summary...",
-    "tags": ["Tag1", "Tag2"]
-}
+```bash
+npm run preview
 ```
-The website will automatically render these cards on the Publications page.
 
-### 4. Images
-- Replace `images/favicon.ico` with your own favicon.
-- Add your profile picture or other assets to `images/` and reference them in your HTML components.
+Development server:
 
-### 5. Styles
-Modify `css/styles.css` to change colors, fonts, or layout behaviors to match your personal brand.
+```bash
+npm run dev
+```
 
-## Deployment
+## Routes
 
-### GitHub Pages
-1. Push this repository to GitHub.
-2. Go to repository **Settings** > **Pages**.
-3. Select the branch (e.g., `main`) and folder (usually `/` root).
-4. Save. Your site will be live at `https://yourusername.github.io/repo-name/`.
+| Page | URL |
+| --- | --- |
+| Home | `/` |
+| Publications | `/publications/` |
+| About | `/about/` |
 
-**Note:** If you are using a custom domain (like `lisongtao.eu.org`), update the `CNAME` file with your domain name. If not, you can delete the `CNAME` file.
+Old hash URLs still open the right page. A small inline script redirects:
+
+- `/#home` → `/`
+- `/#publications` → `/publications/`
+- `/#about` → `/about/`
+
+`sitemap.xml` lists the path URLs, not the hashes.
+
+## Edit content
+
+- Home, about, and the 404 page: `src/pages/`
+- Navigation labels: `src/components/Navbar.astro`
+- Publications: `posts/publications.json` (do not hand-write the cards)
+- Colors, type, and layout: `src/styles/styles.css`
+- Portrait and icons: `public/images/`
+- SEO description and JSON-LD: `src/lib/jsonld.ts` and `src/layouts/BaseLayout.astro`
+
+Publication entries keep the same fields as before (`title`, `authors`, `doi`, and the rest). Only the title and authors are shown on the page.
+
+## Deploy (GitHub Pages)
+
+This repository is a user site. Pages must publish the **built** `dist/` directory, not the Astro source on `main`.
+
+1. In the repository, open **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Merge to `main`. The workflow `.github/workflows/pages.yml` runs `npm ci`, `npm run build`, checks the output, and deploys `dist/`.
+4. Leave `public/CNAME` as `www.lisongtao.eu.org`. The custom domain setting should stay on that host.
+
+Pull requests only build and check. They do not deploy.
+
+## 构建与部署
+
+```bash
+npm ci
+npm run build    # 静态文件输出到 dist/
+npm run preview  # 本地预览构建结果
+```
+
+合并到 `main` 后，GitHub Actions 会把 `dist/` 部署到 GitHub Pages。仓库 **Settings → Pages** 的 Source 需要选 **GitHub Actions**（不要再从分支根目录直接发布，否则会发布 Astro 源码而不是站点）。自定义域名仍由 `public/CNAME`（`www.lisongtao.eu.org`）保持。
