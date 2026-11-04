@@ -35,6 +35,8 @@ must(titleAt !== -1 && introAt > titleAt, 'welcome heading or intro missing');
 const underTitle = home.slice(titleAt, introAt);
 must(underTitle.includes('aria-label="GitHub"') && underTitle.includes('https://github.com/xiaoxiaoxiaotao'), 'GitHub icon is not directly under the welcome heading');
 must(underTitle.includes('aria-label="LinkedIn"') && underTitle.includes('https://www.linkedin.com/in/songtao-li-a0a757274/'), 'LinkedIn icon is not directly under the welcome heading');
+must(underTitle.includes('aria-label="Google Scholar"') && underTitle.includes('https://scholar.google.com/citations?user=oQGqbLgAAAAJ&hl=en') && underTitle.includes('target="_blank"'), 'Google Scholar icon is not directly under the welcome heading');
+must(underTitle.includes('aria-label="ORCID"') && underTitle.includes('https://orcid.org/0009-0005-1805-0326') && underTitle.includes('rel="noopener noreferrer"'), 'ORCID icon is not directly under the welcome heading');
 must(!home.includes('>GitHub<') && !home.includes('>LinkedIn<'), 'social text buttons still present');
 must(home.includes('shqscMoQB9y_7zGeN6nEwFwJpYUC8tpuNc1AmfvPwps'), 'google verification missing');
 must(home.includes('application/ld+json'), 'json-ld missing');
