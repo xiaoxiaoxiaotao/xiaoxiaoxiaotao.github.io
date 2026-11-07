@@ -384,6 +384,30 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
     line-height: 1.4;
 }
 
+.about-interests {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.about-interests li {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0.28rem 0.72rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
 .achievements h2,
 .honors h2,
 .resume-item h2,
