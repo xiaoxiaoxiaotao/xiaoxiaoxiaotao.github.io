@@ -32,21 +32,24 @@ npm run dev
 | --- | --- |
 | Home | `/` |
 | Publications | `/publications/` |
+| Blog | `/blog/` |
 | About | `/about/` |
 
 Old hash URLs still open the right page. A small inline script redirects:
 
 - `/#home` → `/`
 - `/#publications` → `/publications/`
+- `/#blog` → `/blog/`
 - `/#about` → `/about/`
 
 `sitemap.xml` lists the path URLs, not the hashes.
 
 ## Edit content
 
-- Home, about, and the 404 page: `src/pages/`
+- Home, about, blog index, and the 404 page: `src/pages/`
 - Navigation labels: `src/components/Navbar.astro`
 - Publications: `posts/publications.json` (do not hand-write the cards)
+- Blog posts: `src/content/blog/*.md`. The filename is the URL slug (`note.md` → `/blog/note/`). There are no posts yet; the index shows an empty state until one is added. Drafts (`draft: true`) are omitted. A post starts with `title`, `description`, and `date` in front matter.
 - Colors, type, and layout: `src/styles/styles.css`
 - Portrait and icons: `public/images/`
 - SEO description and JSON-LD: `src/lib/jsonld.ts` and `src/layouts/BaseLayout.astro`

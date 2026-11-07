@@ -679,6 +679,47 @@ footer p { margin: 0 0 0.35rem; font-size: 0.92rem; }
     line-height: 1.7;
 }
 
+.blog-empty { text-align: center; }
+
+.blog-empty h2 {
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem;
+}
+
+.post-detail .page-title { margin-top: 0.15rem; }
+
+.post-detail .post-description { margin-bottom: 1.15rem; }
+
+.post-updated { margin-top: 1.35rem; }
+
+.post-content > :first-child { margin-top: 0; }
+.post-content > :last-child { margin-bottom: 0; }
+
+.post-content h2,
+.post-content h3 { margin: 1.6rem 0 0.55rem; }
+
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content blockquote { margin: 0.85rem 0; }
+
+.post-content ul,
+.post-content ol { padding-left: 1.2rem; }
+
+.post-content blockquote {
+    padding: 0.1rem 0 0.1rem 1rem;
+    border-left: 2px solid var(--line);
+    color: var(--muted);
+}
+
+.post-content hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 1.5rem 0;
+}
+
+.post-content img { border-radius: 10px; }
+
 .post-tags,
 .tags {
     display: flex;

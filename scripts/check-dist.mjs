@@ -11,6 +11,7 @@ const must = (cond, message) => {
 must(existsSync('dist/index.html'), 'missing dist/index.html');
 must(existsSync('dist/publications/index.html'), 'missing dist/publications/index.html');
 must(existsSync('dist/about/index.html'), 'missing dist/about/index.html');
+must(existsSync('dist/blog/index.html'), 'missing dist/blog/index.html');
 must(existsSync('dist/404.html'), 'missing dist/404.html');
 must(existsSync('dist/CNAME'), 'missing dist/CNAME');
 must(existsSync('dist/sitemap.xml'), 'missing dist/sitemap.xml');
@@ -20,6 +21,7 @@ must(existsSync('dist/images/photo.jpg'), 'missing portrait');
 const home = read('dist/index.html');
 const pubs = read('dist/publications/index.html');
 const about = read('dist/about/index.html');
+const blog = read('dist/blog/index.html');
 const sitemap = read('dist/sitemap.xml');
 const cname = read('dist/CNAME').trim();
 
@@ -46,6 +48,15 @@ must(pubs.includes('DA34FL: A Robust Dynamic Accumulator-based Authentication an
 must(pubs.includes('https://doi.org/10.1038/s41598-025-33685-1'), 'second doi link missing');
 must(pubs.includes('<strong class="author-self">Songtao Li</strong>'), 'author bold missing');
 must(pubs.includes('Hao Tang'), 'coauthor missing');
+const homeLink = home.indexOf('>Home<');
+const publicationsLink = home.indexOf('>Publications<');
+const blogLink = home.indexOf('>Blog<');
+const aboutLink = home.indexOf('>About Me<');
+must(homeLink !== -1 && homeLink < publicationsLink && publicationsLink < blogLink && blogLink < aboutLink, 'nav order is not Home, Publications, Blog, About Me');
+must(home.includes('href="/blog/"') && home.includes('Notes will be posted on the'), 'home blog link missing');
+must(blog.includes('class="container container-narrow"'), 'blog content width missing');
+must(blog.includes('>Blog<') && blog.includes('No posts yet') && blog.includes('Notes will be listed here.'), 'blog empty state missing');
+must(blog.includes('aria-current="page"'), 'blog nav current state missing');
 must(home.includes('class="container container-narrow"'), 'home content width missing');
 must(pubs.includes('class="container container-narrow"'), 'publications content width missing');
 must(about.includes('class="container container-narrow"'), 'about content width missing');
@@ -66,6 +77,7 @@ must(!about.includes('Programming:') && !about.includes('Pytorch') && !about.inc
 must(cname === 'www.lisongtao.eu.org', `unexpected CNAME: ${cname}`);
 must(sitemap.includes('https://www.lisongtao.eu.org/publications/'), 'sitemap publications path missing');
 must(sitemap.includes('https://www.lisongtao.eu.org/about/'), 'sitemap about path missing');
+must(sitemap.includes('https://www.lisongtao.eu.org/blog/'), 'sitemap blog path missing');
 must(!sitemap.includes('/#publications'), 'sitemap still lists hash publications URL');
 must(!sitemap.includes('/#about'), 'sitemap still lists hash about URL');
 must(!home.includes('This website needs JavaScript'), 'stale noscript message still present');

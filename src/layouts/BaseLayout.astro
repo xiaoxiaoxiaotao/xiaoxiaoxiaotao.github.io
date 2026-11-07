@@ -8,7 +8,7 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   robots?: string;
-  current: 'home' | 'publications' | 'about' | 'none';
+  current: 'home' | 'publications' | 'blog' | 'about' | 'none';
   jsonLd?: boolean;
 }
 
@@ -70,7 +70,7 @@ const keywords =
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     <script is:inline>
       (function () {
-        var routes = { home: '/', publications: '/publications/', about: '/about/' };
+        var routes = { home: '/', publications: '/publications/', blog: '/blog/', about: '/about/' };
         var hash = (location.hash || '').replace(/^#/, '').split('/')[0];
         var target = routes[hash];
         if (target) {

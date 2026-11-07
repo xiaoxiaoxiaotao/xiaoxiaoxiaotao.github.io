@@ -1,0 +1,48 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatPostDate, isoDate, publishedPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await publishedPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const updated = post.data.updated;
+---
+
+<BaseLayout
+  title={`${post.data.title} | Songtao Li`}
+  description={post.data.description}
+  canonicalPath={`/blog/${post.id}/`}
+  current="blog"
+>
+  <main id="main" tabindex="-1">
+    <div class="container container-narrow">
+      <article class="post-detail">
+        <p class="post-meta">
+          <a href="/blog/">Blog</a>
+          <time datetime={isoDate(post.data.date)}>{formatPostDate(post.data.date)}</time>
+        </p>
+        <h1 class="page-title">{post.data.title}</h1>
+        <p class="post-description">{post.data.description}</p>
+        <div class="post-content">
+          <Content />
+        </div>
+        {
+          updated && (
+            <p class="post-meta post-updated">
+              Updated <time datetime={isoDate(updated)}>{formatPostDate(updated)}</time>
+            </p>
+          )
+        }
+        <p class="post-navigation"><a href="/blog/">All posts</a></p>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

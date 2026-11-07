@@ -1,6 +1,6 @@
 ---
 interface Props {
-  current: 'home' | 'publications' | 'about' | 'none';
+  current: 'home' | 'publications' | 'blog' | 'about' | 'none';
 }
 
 const { current } = Astro.props;
@@ -8,6 +8,7 @@ const { current } = Astro.props;
 const links = [
   { href: '/', id: 'home', label: 'Home' },
   { href: '/publications/', id: 'publications', label: 'Publications' },
+  { href: '/blog/', id: 'blog', label: 'Blog' },
   { href: '/about/', id: 'about', label: 'About Me' },
 ];
 ---

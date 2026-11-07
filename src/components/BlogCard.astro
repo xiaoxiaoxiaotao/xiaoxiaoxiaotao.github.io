@@ -1,0 +1,17 @@
+---
+import { formatPostDate, isoDate, postHref, type BlogPost } from '../lib/posts';
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post-item">
+  <p class="post-meta">
+    <time datetime={isoDate(post.data.date)}>{formatPostDate(post.data.date)}</time>
+  </p>
+  <h2><a href={postHref(post)}>{post.data.title}</a></h2>
+  <p class="post-description">{post.data.description}</p>
+</article>

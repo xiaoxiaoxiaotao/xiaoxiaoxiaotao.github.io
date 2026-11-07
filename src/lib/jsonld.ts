@@ -21,6 +21,7 @@ export const jsonLd = {
       hasPart: [
         { '@id': `${site}/#home` },
         { '@id': `${site}/publications/#webpage` },
+        { '@id': `${site}/blog/#webpage` },
         { '@id': `${site}/about/#webpage` },
       ],
     },
@@ -95,6 +96,17 @@ export const jsonLd = {
       description:
         'Publications by Li Songtao, a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).',
       url: `${site}/publications/`,
+      isPartOf: { '@id': `${site}/#website` },
+      about: { '@id': `${site}/#person` },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${site}/blog/#webpage`,
+      name: 'Blog',
+      description:
+        'Blog by Li Songtao, a PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).',
+      url: `${site}/blog/`,
       isPartOf: { '@id': `${site}/#website` },
       about: { '@id': `${site}/#person` },
       inLanguage: 'en',
