@@ -386,7 +386,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 
 .resume-item > ul.about-interests {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: stretch;
     gap: 0.45rem;
     list-style: none;
@@ -476,6 +476,58 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 .honors li:first-child { padding-top: 0; }
 .honors li:last-child { border-bottom: 0; padding-bottom: 0; }
 
+/* Home Hero */
+.home-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 0.15rem 0 1.25rem;
+}
+
+.home-hero-text {
+    min-width: 0;
+    flex: 1;
+}
+
+.home-hero-text .page-title {
+    margin: 0 0 0.85rem;
+}
+
+.home-hero-text .social-links {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.home-photo {
+    width: 96px;
+    height: 96px;
+    flex: none;
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--line);
+}
+
+.home-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+}
+
+@media (min-width: 640px) {
+    .home-hero {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.4rem;
+    }
+
+    .home-photo {
+        width: 112px;
+        height: 112px;
+    }
+}
+
 /* About */
 .profile-layout {
     display: flex;
@@ -494,7 +546,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
     margin: 0;
     flex: none;
     overflow: hidden;
-    border-radius: 50%;
+    border-radius: var(--radius);
     box-shadow: 0 0 0 4px var(--surface), 0 0 0 5px var(--line);
 }
 
@@ -611,14 +663,15 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 }
 
 /* Footer */
-footer {
+.site-footer {
+    width: min(740px, calc(100% - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    margin: 0 auto;
     text-align: center;
-    padding: 0.5rem 0 0;
-    margin-top: 0.4rem;
+    padding: 0 0 2.25rem;
     color: var(--muted);
 }
 
-footer p { margin: 0 0 0.35rem; font-size: 0.92rem; }
+.site-footer p { margin: 0; font-size: 0.92rem; }
 
 .page-title + .social-links {
     margin-top: -0.5rem;

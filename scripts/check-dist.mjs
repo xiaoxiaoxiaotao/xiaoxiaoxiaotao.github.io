@@ -30,7 +30,10 @@ must(home.includes('Hello! I\'m a PhD student at The Hong Kong Polytechnic Unive
 must(home.includes('Large Language Models'), 'interest missing');
 must(home.includes('September 2026:'), 'news missing');
 must(home.includes('National Scholarship'), 'honor missing');
-must(home.includes('© 2024 Songtao Li. All rights reserved.'), 'footer missing');
+must(home.includes('© 2026 Songtao Li. All rights reserved.'), 'footer missing');
+must(pubs.includes('© 2026 Songtao Li. All rights reserved.'), 'publications footer missing');
+must(about.includes('© 2026 Songtao Li. All rights reserved.'), 'about footer missing');
+must(blog.includes('© 2026 Songtao Li. All rights reserved.'), 'blog footer missing');
 const titleAt = home.indexOf("Welcome to Songtao Li's Personal Website");
 const introAt = home.indexOf("Hello! I'm a PhD student");
 must(titleAt !== -1 && introAt > titleAt, 'welcome heading or intro missing');
