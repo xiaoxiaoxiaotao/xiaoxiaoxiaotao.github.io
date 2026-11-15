@@ -1,0 +1,426 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Language Models Can Automatically Explain Language Models via Heuristic Rules';
+const description =
+  'An LLM agent writes, tests, and refines executable predicates to directly explain native MLP neurons in Qwen3.5-0.8B-Base without sparse dictionary decomposition.';
+const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM Explains LLM'];
+---
+
+<BaseLayout
+  title={`${title} | Songtao Li`}
+  description={description}
+  canonicalPath="/blog/lm-explains-lm/"
+  current="blog"
+>
+  <main id="main" tabindex="-1">
+    <div class="container container-article">
+      <article class="post-detail">
+        <p class="post-meta">
+          <a href="/blog/">Blog</a>
+          <time datetime="2026-11-15">15 November 2026</time>
+        </p>
+        <h1 class="page-title">{title}</h1>
+        <p class="post-description"><em>{description}</em></p>
+        <div class="post-tags" style="margin-top:0;margin-bottom:1.15rem;padding-top:0;border-top:0;">
+          {tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+
+        <div class="post-content">
+          <div class="tldr-box">
+            <p>
+              <strong>TL;DR:</strong> Rather than decomposing activations with sparse autoencoders before explaining them, we task an LLM agent with writing and falsifying executable heuristic rules—first <em>absolute</em> input predicates to anchor lower-layer neurons, then <em>relative</em> predicates conditioned on upstream units—to directly explain native MLP neurons in <code>Qwen3.5-0.8B-Base</code>. Over 11 rounds, an isolated LLM-as-Judge and held-out verification yielded 83 accepted neuron explanations (78 heldout-confirmed) backed by 32 active rules.
+            </p>
+          </div>
+
+          <h2>1. Introduction</h2>
+          <p>
+            Most mechanistic interpretability pipelines add a decomposition step before generating any natural-language explanation. Activations are first projected onto a sparse dictionary, such as a sparse autoencoder, to isolate ostensibly monosemantic features; static activating examples are then passed to an LLM to summarize what each feature does. Since the final step already relies on an LLM reading static text, we ask whether decomposition is necessary at all: can an LLM explain native MLP neurons directly from static activating contexts?
+          </p>
+          <p>
+            Our earliest attempts failed. When we gave an LLM raw activations and weights with no structural guidance, it produced only one or two passable explanations across many rounds. In an unmapped network, an LLM inspecting an arbitrary neuron has no reliable way to separate genuine selectivity from incidental co-occurrence, or to tell which neurons are tractable starting points.
+          </p>
+          <p>
+            This bottleneck reflects a property noted in <a href="https://already-clean.goodfire.com/?ref=explainx" target="_blank" rel="noopener noreferrer">Nick Cammarata&rsquo;s <em>Neural Networks Are Already Clean</em></a>: interpretability compounds like a crossword puzzle. Explaining a few neurons constrains and clarifies neighboring or downstream units, whereas an isolated neuron in an otherwise blank network offers little leverage. An LLM explainer therefore needs a way to spot clean, distinguishable neurons first, so that an initial anchor set can bootstrap the rest.
+          </p>
+          <p>
+            Drawing on <a href="https://trinkle23897.github.io/learning-beyond-gradients/" target="_blank" rel="noopener noreferrer">Jiayi Weng&rsquo;s <em>Learning Beyond Gradients</em></a>, we replaced one-shot activation reading with <strong>heuristic rule discovery</strong>. Instead of summarizing raw examples directly, the LLM agent writes executable Python predicates to test concrete hypotheses and separate one neuron from another. Rule-based grouping alone is still fragile: in an early baseline, a k-means cluster labeled <em>&ldquo;software-licence headers&rdquo;</em> was pasted onto 1,485 neurons, leaving 97% of explanations parroting the group label while the units actually fired on 722 distinct cue tokens. Avoiding both unguided stalling and vacuous label-pasting requires strict falsification and contrast.
+          </p>
+
+          <h2>2. Method</h2>
+          <p>
+            Our pipeline centers on an LLM agent that builds, tests, and maintains a library of executable heuristic rules across iterative rounds. Between rounds, the agent proposes new predicates for unexplained activation patterns, refines existing ones that are too narrow, and retires rules that fire indiscriminately (for instance, on more than half of uniform text contexts) or fail to generalize.
+          </p>
+          <p>The rule library is divided into two complementary classes:</p>
+          <ul>
+            <li>
+              <strong>Absolute-position rules:</strong> Predicates evaluated directly on a local text window—capturing token identity, morphology, punctuation boundaries, or preceding tokens. Because they depend only on input text, absolute rules isolate clean lower-layer anchor neurons before any other units are understood.
+            </li>
+            <li>
+              <strong>Relative-position rules:</strong> Predicates conditioned on both the local text window and the activation state of an already-interpreted upstream neuron at a strictly lower layer. They test whether the upstream unit gates, modulates, or vetoes the target neuron, turning prior explanations into building blocks for deeper layers.
+            </li>
+          </ul>
+          <p>
+            Given the active rule library, the agent uses these predicates to partition neurons and generate explanations. Each candidate rule must beat a shuffled-label <code>null95</code> MCC threshold and cover top-activating text rows. To prevent generic label-pasting, each target neuron is paired with a named sibling unit that fires on overlapping contexts, and the agent must write a single sentence explaining why the target fires where its sibling does not.
+          </p>
+          <p>
+            Every candidate explanation is verified by an isolated judge LLM that inspects only the candidate sentence, the activating text rows, the sibling contrast, and the rule evidence—with no access to the generating agent&rsquo;s reasoning. To keep accounting strict, the pipeline separates three distinct objects:
+          </p>
+          <ul>
+            <li>
+              <strong>Rule:</strong> A reusable, executable Python predicate that tests a structural pattern across text or upstream neuron states, independent of any single neuron.
+            </li>
+            <li>
+              <strong>Evidence:</strong> A statistical link between one rule and one target neuron, recorded only when the rule&rsquo;s firing correlates with the neuron&rsquo;s top activations above a shuffled-label (<code>null95</code>) threshold.
+            </li>
+            <li>
+              <strong>Explanation:</strong> A single-sentence natural-language claim about one neuron that synthesizes its backing evidence, contrasts the neuron against a named sibling unit, and passes both blind LLM judgment and held-out replication.
+            </li>
+          </ul>
+
+          <h2>3. Experimental Results</h2>
+          <p>
+            We ran this loop for <strong>11 rounds</strong> on frozen <code>Qwen3.5-0.8B-Base</code> (86,016 MLP units; contract stop cap = 200). As illustrated in <strong>Figure 1 (left)</strong>, the verification funnel filters 14,962 statistical candidates down to 204 units with accepted evidence (370 evidence rows) and <strong>83 accepted explanations</strong> (<strong>78 heldout-confirmed</strong>, 5 heldout-prechecked) across 422 trials and 48 distinct sibling pairs, backed by <strong>42 registered rules</strong> (32 active: 28 absolute, 4 relative; 8 retired).
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Object</th>
+                <th>Definition &amp; Verification Gate</th>
+                <th>Final Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rule</strong></td>
+                <td>Executable Python predicate (absolute or relative) + one-sentence intent specification</td>
+                <td><strong>42</strong> (32 active, 8 retired)</td>
+              </tr>
+              <tr>
+                <td><strong>Evidence</strong></td>
+                <td>Rule beating shuffled-label <code>null95</code> MCC + top-8 row coverage + blind judge accept</td>
+                <td><strong>370</strong> rows (<strong>204</strong> units)</td>
+              </tr>
+              <tr>
+                <td><strong>Explanation</strong></td>
+                <td>Single-sentence unit claim contrasted against a named sibling unit and verified on held-out text</td>
+                <td><strong>83</strong> (78 confirmed, 5 prechecked)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="fig-box">
+            <img src="/images/blog/lm-explains-lm/fig1_scale_and_coverage.png" alt="Verification Funnel and 11-Round Coverage Curve" loading="lazy" decoding="async" />
+            <div class="fig-cap">
+              <strong>Figure 1.</strong> <em>Left (Verification Funnel):</em> Filtering from all 86,016 MLP units in <code>Qwen3.5-0.8B-Base</code> down to 14,962 statistical candidates (best MCC &ge; 0.10), 204 units with accepted <em>evidence</em>, and 83 accepted <em>explanations</em> against a pre-specified run stop cap of 200. Within those 83 explanations, <strong>heldout-confirmed (78)</strong> denotes units whose target and sibling contrast both replicated on unseen held-out text, whereas <strong>heldout-prechecked (5)</strong> denotes units verified only at the initial row-level precheck. <em>Right (Coverage Curve):</em> Cumulative explained units across Rounds 0&ndash;11, highlighting the Round-6 batch expansion and Rounds 9&ndash;11 relative-rule verification.
+            </div>
+          </div>
+
+          <p>
+            As shown in <strong>Figure 1 (right)</strong>, accepted coverage jumped sharply from 18 to 53 units in Round 6 (<code>0 &rarr; 2 &rarr; 5 &rarr; 10 &rarr; 15 &rarr; 18 &rarr; 53 &rarr; 68 &rarr; 77 &rarr; 82 &rarr; 83</code>) once batched rule-guided generation was introduced. A natural concern with such an abrupt expansion is whether batching degrades quality into repetitive templates or over-optimistic prechecks. To verify this, we required every candidate explanation to outperform a mechanical template baseline under blind judgment and capped sibling-pair reuse to enforce diversity. As shown in <strong>Figure 2 (left)</strong>, calibrating 27 row-level prechecked units against full two-sided held-out judge trials yielded <strong>80% (8/10)</strong> agreement on sample and <strong>81.5% (22/27)</strong> overall—confirming that the cheap precheck over-counts by roughly 18.5% and that full held-out verification remains essential. Meanwhile, <strong>Figure 2 (right)</strong> shows that sibling-pair reuse remained bounded across all 48 pairs rather than collapsing onto a handful of easy contrasts.
+          </p>
+
+          <div class="fig-box">
+            <img src="/images/blog/lm-explains-lm/fig3_calibration_and_pairs.png" alt="Calibration and Pair Reuse" loading="lazy" decoding="async" />
+            <div class="fig-cap">
+              <strong>Figure 2.</strong> <em>Left:</em> Agreement between row-level prechecks and full two-sided held-out judge confirmation (80% sample, 81.5% overall). <em>Right:</em> Distribution of sibling-pair reuse across the 48 pairs relative to the per-pair reuse cap.
+            </div>
+          </div>
+
+          <h2>4. Anatomy of Discovered Rules and Explained Neurons</h2>
+          <p>
+            Beyond aggregate counts, the scientific value of the run lies in what the 83 explained neurons actually respond to and how the 42 heuristic rules evolved to isolate them.
+          </p>
+
+          <h3>4.1 What the Explained Neurons Look Like</h3>
+          <p>
+            Across layers L0&ndash;L23 (<strong>Figure 3, right</strong>), the explained MLP units are distributed across depth rather than confined to the embedding boundary, and rarely behave as isolated &ldquo;noun detectors.&rdquo; Instead, echoing Cammarata&rsquo;s observation that neurons act like <em>verbs</em>, they separate recurring structural transitions: clause-opening content tokens immediately after commas, pure punctuation boundaries, numeric or version-number prefixes, and domain-specific formatting cues. In deeper layers (L13&ndash;L23), six units were confirmed as circuit-gated behaviors whose firing depends on whether an earlier-layer unit is active or suppressed. Inspect any of the 83 accepted units below to examine its explanation, sibling contrast, top-activating contexts, and supporting predicates.
+          </p>
+
+          <div class="widget" id="neuronWidget">
+            <div class="widget-head">
+              <div class="widget-title">Interactive Neuron &amp; Evidence Inspector (83 Units)</div>
+              <div class="widget-controls">
+                <input type="text" id="nSearch" placeholder="Search unit, quote, or rule..." aria-label="Search unit, quote, or rule" />
+                <select id="nSelect" aria-label="Select neuron unit"></select>
+              </div>
+            </div>
+            <div class="chip-bar" id="featuredChips"></div>
+            <div id="neuronBody"><p class="widget-muted">Loading interactive neuron data...</p></div>
+          </div>
+
+          <h3>4.2 How the Rules Evolved and Why They Work</h3>
+          <p>
+            As summarized in <strong>Figure 3 (left)</strong>, a relatively compact set of surviving rules accounts for the bulk of accepted explanations, while specialized relative gates target deeper layers. The rule library works because it acts as a falsifiable microscope: predicates that are too broad or too literal fail statistical or judge checks and are pruned, leaving only structural distinctions that generalize across unseen text. Over 11 rounds, <strong>8 rules were retired</strong> for two recurring reasons—either firing on more than half of uniform text contexts (making them too unselective to separate siblings) or hardcoding literal answer tokens from a unit&rsquo;s own top rows—while narrow predicates were occasionally rescued by composing them with complementary conditions. Use the Rule Workshop below to inspect representative evolutions.
+          </p>
+
+          <div class="widget" id="ruleWorkshopWidget">
+            <div class="widget-head">
+              <div class="widget-title">Rule Workshop: Retired vs. Rescued Rules (Source Code)</div>
+            </div>
+            <div class="chip-bar" id="ruleWorkshopChips"></div>
+            <div id="ruleWorkshopBody"><p class="widget-muted">Loading rule workshop...</p></div>
+          </div>
+
+          <div class="fig-box">
+            <img src="/images/blog/lm-explains-lm/fig2_rules_and_layers.png" alt="Rule Usage and Layer Distribution" loading="lazy" decoding="async" />
+            <div class="fig-cap">
+              <strong>Figure 3.</strong> <em>Left:</em> Most frequently cited rules by number of accepted explanations backed, distinguishing active absolute rules, active relative circuit rules (purple), and retired rules (red). <em>Right:</em> Layer-wise distribution of the 83 explained neurons across layers L0&ndash;L23.
+            </div>
+          </div>
+
+          <p>
+            Extending the library from absolute rules to <strong>relative circuit-gate rules</strong> revealed a subtler failure mode in LLM-generated explanations. In Rounds 9&ndash;11, the agent authored four relative gates reading strictly lower-layer activations and produced six heldout-confirmed circuit explanations. However, auditing those sentences row-by-row uncovered that four of the five early circuit explanations attributed separation to a negated upstream arm (&ldquo;vetoed when unit X is high&rdquo;) even when that negative arm was statistically inert. Enforcing per-arm evidence checks forced the agent to rewrite every circuit explanation to match which arm actually drove the contrast—and in Round 11 verified a genuine upstream veto gate on held-out text, even though its only eligible absolute partner failed held-out coverage.
+          </p>
+
+          <div class="widget" id="circuitAuditWidget">
+            <div class="widget-head">
+              <div class="widget-title">Interactive Circuit-Gate Audit: Before vs. After Per-Arm Verification</div>
+            </div>
+            <div class="chip-bar" id="circuitChips"></div>
+            <div id="circuitBody"><p class="widget-muted">Loading circuit-gate audits...</p></div>
+          </div>
+        </div>
+
+        <p class="post-navigation"><a href="/blog/">All posts</a></p>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    const FEATURED = [
+      'L0:u59',
+      'L1:u2183',
+      'L15:u1491',
+      'L7:u1024',
+      'L18:u673',
+      'L2:u331',
+      'L20:u1374',
+      'L6:u3555',
+      'L14:u60',
+      'L16:u26',
+    ];
+    const WORKSHOP = [
+      'complement_head_token',
+      'comma_in_prefix',
+      'capitalised_word_in_prefix',
+      'pure_punctuation_token',
+      'digit_in_prev_token',
+      'veto_l14u293_high_l0u2296_off',
+    ];
+
+    let D = null;
+    let curUnit = 'L15:u1491';
+    let curRule = 'complement_head_token';
+    let curCircuit = 'L23:u1466';
+
+    function esc(s) {
+      return String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function hq(s) {
+      return esc(s).replace(/«([^»]+)»/g, '<span class="quote">«$1»</span>');
+    }
+
+    function renderUnitSelect() {
+      if (!D) return;
+      const searchEl = document.getElementById('nSearch');
+      const selEl = document.getElementById('nSelect');
+      if (!searchEl || !selEl) return;
+      const q = searchEl.value.toLowerCase();
+      const list = D.explanations.filter(
+        (e) =>
+          !q ||
+          (e.unit + ' ' + e.sentence + ' ' + (e.evidence || []).map((x) => x.rule).join(' '))
+            .toLowerCase()
+            .includes(q),
+      );
+      selEl.innerHTML = list
+        .map(
+          (e) =>
+            `<option value="${esc(e.unit)}" ${e.unit === curUnit ? 'selected' : ''}>${esc(e.unit)} (${e.heldout_confirmed ? 'confirmed' : 'prechecked'})</option>`,
+        )
+        .join('');
+      if (list.length && !list.some((e) => e.unit === curUnit)) curUnit = list[0].unit;
+      renderNeuron();
+    }
+
+    function renderNeuron() {
+      if (!D) return;
+      const chipsEl = document.getElementById('featuredChips');
+      const bodyEl = document.getElementById('neuronBody');
+      if (!chipsEl || !bodyEl) return;
+
+      chipsEl.innerHTML = FEATURED.map(
+        (u) => `<button type="button" class="chip ${u === curUnit ? 'active' : ''}" data-unit="${esc(u)}">${esc(u)}</button>`,
+      ).join('');
+
+      const e = D.explanations.find((x) => x.unit === curUnit);
+      if (!e) {
+        bodyEl.innerHTML = '<p class="widget-muted">No matching unit found.</p>';
+        return;
+      }
+
+      const st = e.heldout_confirmed
+        ? '<span class="badge b-conf">heldout-confirmed</span>'
+        : '<span class="badge b-pre">heldout-prechecked</span>';
+      const g = e.judge?.gate_mechanism_supported
+        ? ' <span class="badge b-rel">gate_mechanism_supported</span>'
+        : '';
+
+      const grid = (e.evidence || [])
+        .map((ev) => {
+          const cells = [0, 1, 2, 3, 4, 5, 6, 7]
+            .map((i) => `<div class="cell ${(ev.rows || []).includes(i) ? 'hit' : 'miss'}">${i}</div>`)
+            .join('');
+          return `<div class="row-grid"><span class="row-grid-rule" title="${esc(ev.rule)}">${esc(ev.rule)}</span>${cells}</div>`;
+        })
+        .join('');
+
+      const rSources = (e.evidence || [])
+        .map((ev) => {
+          const r = D.rules.find((x) => x.name === ev.rule);
+          return r
+            ? `<details><summary>Python source: rules/${esc(r.name)}.py</summary><pre class="code">${esc(r.source_code)}</pre></details>`
+            : '';
+        })
+        .join('');
+
+      const hiRows = e.fit_high_rows
+        ? `<details><summary>Decoded 8 Fit High Rows (from top.npz)</summary>${e.fit_high_rows
+            .map((r) => `<div class="ctx-box"><div class="ctx-title">High ${esc(r.row)} · ${esc(r.title)}</div><div>${hq(r.text)}</div></div>`)
+            .join('')}</details>`
+        : '';
+
+      bodyEl.innerHTML = `
+        <div class="widget-meta-row">
+          <strong class="widget-unit-title">${esc(e.unit)} <span class="widget-muted">vs. sibling ${esc(e.sibling)}</span></strong>
+          <div>${st}${g}</div>
+        </div>
+        <p class="widget-sentence">${hq(e.sentence)}</p>
+        <p class="widget-contrast"><strong>Contrast:</strong> ${hq(e.contrast)}</p>
+        <div class="widget-sublabel">Fit Top-8 Agreement (Held-out agree: ${esc(e.heldout_agree_rows)}/8)</div>
+        <div class="row-grid-wrap">${grid}</div>
+        ${hiRows}
+        ${rSources}
+      `;
+    }
+
+    function renderWorkshop() {
+      if (!D) return;
+      const chipsEl = document.getElementById('ruleWorkshopChips');
+      const bodyEl = document.getElementById('ruleWorkshopBody');
+      if (!chipsEl || !bodyEl) return;
+
+      chipsEl.innerHTML = WORKSHOP.map((rn) => {
+        const r = D.rules.find((x) => x.name === rn);
+        const cls = r?.retired ? 'ret' : r?.kind === 'relative' ? 'rel' : '';
+        return `<button type="button" class="chip ${cls} ${rn === curRule ? 'active' : ''}" data-rule="${esc(rn)}">${esc(rn)}</button>`;
+      }).join('');
+
+      const r = D.rules.find((x) => x.name === curRule);
+      if (!r) return;
+      const badge = r.retired
+        ? '<span class="badge b-ret">retired</span>'
+        : r.kind === 'relative'
+          ? '<span class="badge b-rel">active · relative</span>'
+          : '<span class="badge b-conf">active · absolute</span>';
+
+      bodyEl.innerHTML = `
+        <div class="widget-meta-row">
+          <code>rules/${esc(r.name)}.py</code>
+          <div>${badge} <span class="badge b-rule">backs ${esc(r.explanation_count)} expl</span></div>
+        </div>
+        <p class="widget-contrast" style="margin-bottom:0.4rem;"><strong>Intent:</strong> ${esc(r.intent)}</p>
+        <pre class="code">${esc(r.source_code)}</pre>
+      `;
+    }
+
+    function renderCircuit() {
+      if (!D) return;
+      const chipsEl = document.getElementById('circuitChips');
+      const bodyEl = document.getElementById('circuitBody');
+      if (!chipsEl || !bodyEl) return;
+
+      chipsEl.innerHTML = D.circuit_audits
+        .map(
+          (c) =>
+            `<button type="button" class="chip rel ${c.unit === curCircuit ? 'active' : ''}" data-circuit="${esc(c.unit)}">${esc(c.unit)} (${c.veto_effective ? 'real veto' : 'pos-arm only'})</button>`,
+        )
+        .join('');
+
+      const c = D.circuit_audits.find((x) => x.unit === curCircuit);
+      if (!c) return;
+      const vb = c.veto_effective
+        ? '<span class="badge b-conf">Active veto (negative arm effective)</span>'
+        : '<span class="badge b-pre">Positive-arm only (negative arm inert)</span>';
+
+      bodyEl.innerHTML = `
+        <div class="widget-meta-row">
+          <strong>${esc(c.unit)} · <code>${esc(c.gate)}</code></strong>
+          ${vb}
+        </div>
+        <p class="widget-contrast" style="margin-bottom:0.5rem;"><strong>Arm counts:</strong> ${esc(c.arms)}</p>
+        <div class="split-2">
+          <div class="box-bad"><strong>Before (without per-arm check):</strong><br/>${esc(c.before)}</div>
+          <div class="box-good"><strong>After (with per-arm verification):</strong><br/>${esc(c.after)}</div>
+        </div>
+      `;
+    }
+
+    async function init() {
+      try {
+        const res = await fetch('/data/lm-explains-lm-data.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        D = await res.json();
+
+        document.getElementById('nSearch')?.addEventListener('input', renderUnitSelect);
+        document.getElementById('nSelect')?.addEventListener('change', (ev) => {
+          const target = ev.target;
+          if (target instanceof HTMLSelectElement) {
+            curUnit = target.value;
+            renderNeuron();
+          }
+        });
+        document.getElementById('featuredChips')?.addEventListener('click', (ev) => {
+          const btn = ev.target instanceof Element ? ev.target.closest('button[data-unit]') : null;
+          if (btn) {
+            curUnit = btn.getAttribute('data-unit') || curUnit;
+            renderUnitSelect();
+          }
+        });
+        document.getElementById('ruleWorkshopChips')?.addEventListener('click', (ev) => {
+          const btn = ev.target instanceof Element ? ev.target.closest('button[data-rule]') : null;
+          if (btn) {
+            curRule = btn.getAttribute('data-rule') || curRule;
+            renderWorkshop();
+          }
+        });
+        document.getElementById('circuitChips')?.addEventListener('click', (ev) => {
+          const btn = ev.target instanceof Element ? ev.target.closest('button[data-circuit]') : null;
+          if (btn) {
+            curCircuit = btn.getAttribute('data-circuit') || curCircuit;
+            renderCircuit();
+          }
+        });
+
+        renderUnitSelect();
+        renderWorkshop();
+        renderCircuit();
+      } catch (err) {
+        const msg = '<p class="widget-muted">Failed to load interactive data.</p>';
+        ['neuronBody', 'ruleWorkshopBody', 'circuitBody'].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = msg;
+        });
+      }
+    }
+
+    init();
+  </script>
+</BaseLayout>

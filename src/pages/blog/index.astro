@@ -4,6 +4,18 @@ import BlogCard from '../../components/BlogCard.astro';
 import { publishedPosts } from '../../lib/posts';
 
 const posts = await publishedPosts();
+
+const interactivePosts = [
+  {
+    href: '/blog/lm-explains-lm/',
+    dateIso: '2026-11-15',
+    dateLabel: '15 November 2026',
+    title: 'Language Models Can Automatically Explain Language Models via Heuristic Rules',
+    description:
+      'An LLM agent writes, tests, and refines executable predicates to directly explain native MLP neurons in Qwen3.5-0.8B-Base without sparse dictionary decomposition.',
+    tags: ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM Explains LLM'],
+  },
+];
 ---
 
 <BaseLayout
@@ -15,20 +27,25 @@ const posts = await publishedPosts();
   <main id="main" tabindex="-1">
     <div class="container container-narrow">
       <h1 class="page-title">Blog</h1>
-      {
-        posts.length === 0 ? (
-          <div class="post-item blog-empty">
-            <h2>No posts yet</h2>
-            <p class="post-description">Notes will be listed here.</p>
-          </div>
-        ) : (
-          <div class="posts-list">
-            {posts.map((post) => (
-              <BlogCard post={post} />
-            ))}
-          </div>
-        )
-      }
+      <div class="posts-list">
+        {interactivePosts.map((post) => (
+          <article class="post-item">
+            <p class="post-meta">
+              <time datetime={post.dateIso}>{post.dateLabel}</time>
+            </p>
+            <h2><a href={post.href}>{post.title}</a></h2>
+            <p class="post-description">{post.description}</p>
+            <div class="post-tags">
+              {post.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+        {posts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
     </div>
   </main>
 </BaseLayout>
