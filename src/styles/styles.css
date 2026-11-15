@@ -1231,6 +1231,93 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
     font-size: 0.85rem;
 }
 
+/* Academic citations, references & BibTeX block */
+.cite-link {
+    font-size: 0.88em;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0 0.1rem;
+}
+
+.cite-link:hover { text-decoration: underline; }
+
+.ref-list {
+    margin: 0.75rem 0 1.4rem;
+    padding-left: 1.45rem;
+    font-size: 0.94rem;
+    line-height: 1.65;
+}
+
+.ref-list li {
+    margin-bottom: 0.6rem;
+    color: var(--ink);
+}
+
+.ref-list li:target {
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 0.15rem 0.35rem;
+    margin-left: -0.35rem;
+}
+
+.bibtex-wrap {
+    margin: 0.75rem 0 1.35rem;
+    background: #f0efe9;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .bibtex-wrap {
+        background: #232a36;
+    }
+}
+
+:root[data-theme="dark"] .bibtex-wrap {
+    background: #232a36;
+}
+
+.bibtex-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.85rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.bibtex-copy {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 0.2rem 0.55rem;
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.bibtex-copy:hover {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    border-color: var(--accent);
+}
+
+.bibtex-code {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--ink);
+    background: transparent;
+    overflow-x: auto;
+}
+
 
 .post-content {
     line-height: 1.75;

@@ -35,16 +35,16 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
 
           <h2>1. Introduction</h2>
           <p>
-            Most mechanistic interpretability pipelines add a decomposition step before generating any natural-language explanation. Activations are first projected onto a sparse dictionary, such as a sparse autoencoder, to isolate ostensibly monosemantic features; static activating examples are then passed to an LLM to summarize what each feature does. Since the final step already relies on an LLM reading static text, we ask whether decomposition is necessary at all: can an LLM explain native MLP neurons directly from static activating contexts?
+            Most mechanistic interpretability pipelines add a decomposition step before generating any natural-language explanation. Activations are first projected onto a sparse dictionary, such as a sparse autoencoder, to isolate ostensibly monosemantic features; static activating examples are then passed to an LLM to summarize what each feature does. Since the final step already relies on an LLM reading static text, we ask whether decomposition is necessary at all: building on recent evidence that native MLP neurons are already sparse, legible units of computation <a href="#ref-1" class="cite-link">[1]</a><a href="#ref-2" class="cite-link">[2]</a>, can an LLM explain them directly from static activating contexts?
           </p>
           <p>
             Our earliest attempts failed. When we gave an LLM raw activations and weights with no structural guidance, it produced only one or two passable explanations across many rounds. In an unmapped network, an LLM inspecting an arbitrary neuron has no reliable way to separate genuine selectivity from incidental co-occurrence, or to tell which neurons are tractable starting points.
           </p>
           <p>
-            This bottleneck reflects a property noted in <a href="https://already-clean.goodfire.com/?ref=explainx" target="_blank" rel="noopener noreferrer">Nick Cammarata&rsquo;s <em>Neural Networks Are Already Clean</em></a>: interpretability compounds like a crossword puzzle. Explaining a few neurons constrains and clarifies neighboring or downstream units, whereas an isolated neuron in an otherwise blank network offers little leverage. An LLM explainer therefore needs a way to spot clean, distinguishable neurons first, so that an initial anchor set can bootstrap the rest.
+            This bottleneck reflects a property noted in Nick Cammarata&rsquo;s <em>Neural Networks Are Already Clean</em> <a href="#ref-1" class="cite-link">[1]</a>: interpretability compounds like a crossword puzzle. Explaining a few neurons constrains and clarifies neighboring or downstream units, whereas an isolated neuron in an otherwise blank network offers little leverage. An LLM explainer therefore needs a way to spot clean, distinguishable neurons first, so that an initial anchor set can bootstrap the rest.
           </p>
           <p>
-            Drawing on <a href="https://trinkle23897.github.io/learning-beyond-gradients/" target="_blank" rel="noopener noreferrer">Jiayi Weng&rsquo;s <em>Learning Beyond Gradients</em></a>, we replaced one-shot activation reading with <strong>heuristic rule discovery</strong>. Instead of summarizing raw examples directly, the LLM agent writes executable Python predicates to test concrete hypotheses and separate one neuron from another. Rule-based grouping alone is still fragile: in an early baseline, a k-means cluster labeled <em>&ldquo;software-licence headers&rdquo;</em> was pasted onto 1,485 neurons, leaving 97% of explanations parroting the group label while the units actually fired on 722 distinct cue tokens. Avoiding both unguided stalling and vacuous label-pasting requires strict falsification and contrast.
+            Drawing on Jiayi Weng&rsquo;s <em>Learning Beyond Gradients</em> <a href="#ref-3" class="cite-link">[3]</a>, we replaced one-shot activation reading with <strong>heuristic rule discovery</strong>. Instead of summarizing raw examples directly, the LLM agent writes executable Python predicates to test concrete hypotheses and separate one neuron from another. Rule-based grouping alone is still fragile: in an early baseline, a k-means cluster labeled <em>&ldquo;software-licence headers&rdquo;</em> was pasted onto 1,485 neurons, leaving 97% of explanations parroting the group label while the units actually fired on 722 distinct cue tokens. Avoiding both unguided stalling and vacuous label-pasting requires strict falsification and contrast.
           </p>
 
           <h2>2. Method</h2>
@@ -135,7 +135,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
 
           <h3>4.1 What the Explained Neurons Look Like</h3>
           <p>
-            Across layers L0&ndash;L23 (<strong>Figure 3, right</strong>), the explained MLP units are distributed across depth rather than confined to the embedding boundary, and rarely behave as isolated &ldquo;noun detectors.&rdquo; Instead, echoing Cammarata&rsquo;s observation that neurons act like <em>verbs</em>, they separate recurring structural transitions: clause-opening content tokens immediately after commas, pure punctuation boundaries, numeric or version-number prefixes, and domain-specific formatting cues. In deeper layers (L13&ndash;L23), six units were confirmed as circuit-gated behaviors whose firing depends on whether an earlier-layer unit is active or suppressed. Inspect any of the 83 accepted units below to examine its explanation, sibling contrast, top-activating contexts, and supporting predicates.
+            Across layers L0&ndash;L23 (<strong>Figure 3, right</strong>), the explained MLP units are distributed across depth rather than confined to the embedding boundary, and rarely behave as isolated &ldquo;noun detectors.&rdquo; Instead, echoing Cammarata&rsquo;s observation that neurons act like <em>verbs</em> <a href="#ref-1" class="cite-link">[1]</a>, they separate recurring structural transitions: clause-opening content tokens immediately after commas, pure punctuation boundaries, numeric or version-number prefixes, and domain-specific formatting cues. In deeper layers (L13&ndash;L23), six units were confirmed as circuit-gated behaviors whose firing depends on whether an earlier-layer unit is active or suppressed. Inspect any of the 83 accepted units below to examine its explanation, sibling contrast, top-activating contexts, and supporting predicates.
           </p>
 
           <div class="widget" id="neuronWidget">
@@ -180,6 +180,34 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             </div>
             <div class="chip-bar" id="circuitChips"></div>
             <div id="circuitBody"><p class="widget-muted">Loading circuit-gate audits...</p></div>
+          </div>
+
+          <h2>References</h2>
+          <ol class="ref-list">
+            <li id="ref-1">
+              Nick Cammarata (with contributions from Curt Tigges and Tarun Gogineni). &ldquo;<a href="https://already-clean.goodfire.com/" target="_blank" rel="noopener noreferrer">Neural Networks Are Already Clean</a>.&rdquo; <em>Goodfire</em>, 2026.
+            </li>
+            <li id="ref-2">
+              Curt Tigges, Matthew Kowal, Thomas McGrath, Owen Lewis, and Nick Cammarata. &ldquo;<a href="https://www.goodfire.com/research/neurons-as-an-interpretable-basis" target="_blank" rel="noopener noreferrer">Neurons as an Interpretable Basis</a>.&rdquo; <em>Goodfire</em>, November 2026.
+            </li>
+            <li id="ref-3">
+              Jiayi Weng. &ldquo;<a href="https://trinkle23897.github.io/learning-beyond-gradients/" target="_blank" rel="noopener noreferrer">Learning Beyond Gradients</a>.&rdquo; <em>n+e&rsquo;s blog</em>, May 2026.
+            </li>
+          </ol>
+
+          <h2>Cite this post</h2>
+          <div class="bibtex-wrap">
+            <div class="bibtex-head">
+              <span>BibTeX</span>
+              <button type="button" class="bibtex-copy" id="copyBibtex">Copy</button>
+            </div>
+            <pre class="bibtex-code" id="bibtexText">@misc&#123;li2026lmexplainslm,
+  title  = &#123;Language Models Can Automatically Explain Language Models via Heuristic Rules&#125;,
+  author = &#123;Li, Songtao&#125;,
+  year   = &#123;2026&#125;,
+  month  = nov,
+  url    = &#123;https://www.lisongtao.eu.org/blog/lm-explains-lm/&#125;
+&#125;</pre>
           </div>
         </div>
 
@@ -422,5 +450,18 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
     }
 
     init();
+
+    document.getElementById('copyBibtex')?.addEventListener('click', async () => {
+      const pre = document.getElementById('bibtexText');
+      const btn = document.getElementById('copyBibtex');
+      if (!pre || !btn) return;
+      try {
+        await navigator.clipboard.writeText(pre.textContent || '');
+        btn.textContent = 'Copied';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+        }, 1600);
+      } catch (e) {}
+    });
   </script>
 </BaseLayout>

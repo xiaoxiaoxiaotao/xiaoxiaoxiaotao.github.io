@@ -69,6 +69,8 @@ const lmPost = read('dist/blog/lm-explains-lm/index.html');
 must(lmPost.includes('Language Models Can Automatically Explain Language Models via Heuristic Rules'), 'lm-explains-lm title missing');
 must(lmPost.includes('id="neuronWidget"') && lmPost.includes('id="ruleWorkshopWidget"') && lmPost.includes('id="circuitAuditWidget"'), 'lm-explains-lm interactive widgets missing');
 must(lmPost.includes('/images/blog/lm-explains-lm/fig1_scale_and_coverage.png'), 'lm-explains-lm fig1 missing');
+must(lmPost.includes('<h2>References</h2>') && lmPost.includes('neurons-as-an-interpretable-basis'), 'lm-explains-lm references missing');
+must(lmPost.includes('<h2>Cite this post</h2>') && lmPost.includes('li2026lmexplainslm'), 'lm-explains-lm bibtex missing');
 must(home.includes('class="container container-narrow"'), 'home content width missing');
 must(pubs.includes('class="container container-narrow"'), 'publications content width missing');
 must(about.includes('class="container container-narrow"'), 'about content width missing');
