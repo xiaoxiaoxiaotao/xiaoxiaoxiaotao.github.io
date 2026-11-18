@@ -50,6 +50,7 @@ export const jsonLd = {
       familyName: 'Li',
       alternateName: 'Li Songtao',
       url: `${site}/`,
+      email: 'mailto:songtao0506.li@connect.polyu.hk',
       jobTitle: 'PhD Student',
       description:
         'PhD student in the Department of Computing at The Hong Kong Polytechnic University (PolyU).',
@@ -80,6 +81,8 @@ export const jsonLd = {
       sameAs: [
         'https://github.com/xiaoxiaoxiaotao',
         'https://www.linkedin.com/in/songtao-li-a0a757274/',
+        'https://scholar.google.com/citations?user=oQGqbLgAAAAJ&hl=en',
+        'https://orcid.org/0009-0005-1805-0326',
       ],
       knowsAbout: [
         'Large Language Models',
@@ -124,3 +127,43 @@ export const jsonLd = {
     },
   ],
 };
+
+export function createArticleJsonLd(opts: {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  datePublished: string;
+  imagePath?: string;
+  keywords?: string[];
+}) {
+  const url = new URL(opts.canonicalPath, site).href;
+  const imageUrl = new URL(opts.imagePath || '/images/photo.jpg', site).href;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: opts.title,
+    description: opts.description,
+    url,
+    datePublished: opts.datePublished,
+    dateModified: opts.datePublished,
+    inLanguage: 'en',
+    image: imageUrl,
+    keywords: opts.keywords?.join(', '),
+    author: {
+      '@type': 'Person',
+      '@id': `${site}/#person`,
+      name: 'Songtao Li',
+      url: `${site}/`,
+    },
+    publisher: {
+      '@type': 'Person',
+      '@id': `${site}/#person`,
+      name: 'Songtao Li',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+  };
+}

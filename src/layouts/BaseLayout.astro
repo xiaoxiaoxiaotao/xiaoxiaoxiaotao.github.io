@@ -10,6 +10,10 @@ interface Props {
   robots?: string;
   current: 'home' | 'publications' | 'blog' | 'about' | 'none';
   jsonLd?: boolean;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  ogImageAlt?: string;
+  extraJsonLd?: Record<string, unknown>;
 }
 
 const {
@@ -19,10 +23,15 @@ const {
   robots = 'index, follow',
   current,
   jsonLd: includeJsonLd = true,
+  ogType = 'website',
+  ogImage = '/images/photo.jpg',
+  ogImageAlt = 'Portrait of Songtao Li',
+  extraJsonLd,
 } = Astro.props;
 
 const site = 'https://www.lisongtao.eu.org';
 const canonical = new URL(canonicalPath, site).href;
+const ogImageUrl = new URL(ogImage, site).href;
 const keywords =
   'Songtao Li, Li Songtao, PolyU, Department of Computing, The Hong Kong Polytechnic University, PhD, Large Language Models, Interpretability, Data-Centric AI';
 ---
@@ -45,23 +54,20 @@ const keywords =
     {
       includeJsonLd && (
         <>
-          <meta property="og:type" content="website" />
+          <meta property="og:type" content={ogType} />
           <meta property="og:site_name" content="Songtao Li" />
           <meta property="og:url" content={canonical} />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={description} />
-          <meta property="og:image" content={`${site}/images/photo.jpg`} />
-          <meta property="og:image:alt" content="Portrait of Songtao Li" />
-          <meta property="og:image:type" content="image/jpeg" />
-          <meta property="og:image:width" content="800" />
-          <meta property="og:image:height" content="1157" />
+          <meta property="og:image" content={ogImageUrl} />
+          <meta property="og:image:alt" content={ogImageAlt} />
           <meta property="og:locale" content="en_US" />
-          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:card" content={ogType === 'article' ? 'summary_large_image' : 'summary'} />
           <meta name="twitter:title" content={title} />
           <meta name="twitter:description" content={description} />
           <meta name="twitter:url" content={canonical} />
-          <meta name="twitter:image" content={`${site}/images/photo.jpg`} />
-          <meta name="twitter:image:alt" content="Portrait of Songtao Li" />
+          <meta name="twitter:image" content={ogImageUrl} />
+          <meta name="twitter:image:alt" content={ogImageAlt} />
         </>
       )
     }
@@ -98,6 +104,11 @@ const keywords =
     {
       includeJsonLd && (
         <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
+    {
+      extraJsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(extraJsonLd)} />
       )
     }
   </head>

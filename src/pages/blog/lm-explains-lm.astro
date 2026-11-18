@@ -1,10 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { createArticleJsonLd } from '../../lib/jsonld';
 
 const title = 'Language Models Can Automatically Explain Language Models via Heuristic Rules';
 const description =
   'An LLM agent writes, tests, and refines executable predicates to directly explain native MLP neurons in Qwen3.5-0.8B-Base without sparse dictionary decomposition.';
 const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM Explains LLM'];
+const articleJsonLd = createArticleJsonLd({
+  title,
+  description,
+  canonicalPath: '/blog/lm-explains-lm/',
+  datePublished: '2026-11-15',
+  imagePath: '/images/blog/lm-explains-lm/fig1_scale_and_coverage.png',
+  keywords: tags,
+});
 ---
 
 <BaseLayout
@@ -12,6 +21,10 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
   description={description}
   canonicalPath="/blog/lm-explains-lm/"
   current="blog"
+  ogType="article"
+  ogImage="/images/blog/lm-explains-lm/fig1_scale_and_coverage.png"
+  ogImageAlt="Verification Funnel and 11-Round Coverage Curve"
+  extraJsonLd={articleJsonLd}
 >
   <main id="main" tabindex="-1">
     <div class="container container-article">
@@ -26,6 +39,16 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
           {tags.map((tag) => <span class="tag">{tag}</span>)}
         </div>
 
+        <nav class="post-toc" aria-label="Table of contents">
+          <span class="post-toc-label">Contents</span>
+          <a href="#sec-intro">1. Introduction</a>
+          <a href="#sec-method">2. Method</a>
+          <a href="#sec-results">3. Results</a>
+          <a href="#sec-anatomy">4. Anatomy &amp; Widgets</a>
+          <a href="#sec-references">References</a>
+          <a href="#sec-cite">Cite</a>
+        </nav>
+
         <div class="post-content">
           <div class="tldr-box">
             <p>
@@ -33,7 +56,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             </p>
           </div>
 
-          <h2>1. Introduction</h2>
+          <h2 id="sec-intro">1. Introduction</h2>
           <p>
             Most mechanistic interpretability pipelines add a decomposition step before generating any natural-language explanation. Activations are first projected onto a sparse dictionary, such as a sparse autoencoder, to isolate ostensibly monosemantic features; static activating examples are then passed to an LLM to summarize what each feature does. Since the final step already relies on an LLM reading static text, we ask whether decomposition is necessary at all: building on recent evidence that native MLP neurons are already sparse, legible units of computation <a href="#ref-1" class="cite-link">[1]</a><a href="#ref-2" class="cite-link">[2]</a>, can an LLM explain them directly from static activating contexts?
           </p>
@@ -47,7 +70,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             Drawing on Jiayi Weng&rsquo;s <em>Learning Beyond Gradients</em> <a href="#ref-3" class="cite-link">[3]</a>, we replaced one-shot activation reading with <strong>heuristic rule discovery</strong>. Instead of summarizing raw examples directly, the LLM agent writes executable Python predicates to test concrete hypotheses and separate one neuron from another. Rule-based grouping alone is still fragile: in an early baseline, a k-means cluster labeled <em>&ldquo;software-licence headers&rdquo;</em> was pasted onto 1,485 neurons, leaving 97% of explanations parroting the group label while the units actually fired on 722 distinct cue tokens. Avoiding both unguided stalling and vacuous label-pasting requires strict falsification and contrast.
           </p>
 
-          <h2>2. Method</h2>
+          <h2 id="sec-method">2. Method</h2>
           <p>
             Our pipeline centers on an LLM agent that builds, tests, and maintains a library of executable heuristic rules across iterative rounds. Between rounds, the agent proposes new predicates for unexplained activation patterns, refines existing ones that are too narrow, and retires rules that fire indiscriminately (for instance, on more than half of uniform text contexts) or fail to generalize.
           </p>
@@ -78,7 +101,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             </li>
           </ul>
 
-          <h2>3. Experimental Results</h2>
+          <h2 id="sec-results">3. Experimental Results</h2>
           <p>
             We ran this loop for <strong>11 rounds</strong> on frozen <code>Qwen3.5-0.8B-Base</code> (86,016 MLP units; contract stop cap = 200). As illustrated in <strong>Figure 1 (left)</strong>, the verification funnel filters 14,962 statistical candidates down to 204 units with accepted evidence (370 evidence rows) and <strong>83 accepted explanations</strong> (<strong>78 heldout-confirmed</strong>, 5 heldout-prechecked) across 422 trials and 48 distinct sibling pairs, backed by <strong>42 registered rules</strong> (32 active: 28 absolute, 4 relative; 8 retired).
           </p>
@@ -128,7 +151,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             </div>
           </div>
 
-          <h2>4. Anatomy of Discovered Rules and Explained Neurons</h2>
+          <h2 id="sec-anatomy">4. Anatomy of Discovered Rules and Explained Neurons</h2>
           <p>
             Beyond aggregate counts, the scientific value of the run lies in what the 83 explained neurons actually respond to and how the 42 heuristic rules evolved to isolate them.
           </p>
@@ -182,7 +205,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             <div id="circuitBody"><p class="widget-muted">Loading circuit-gate audits...</p></div>
           </div>
 
-          <h2>References</h2>
+          <h2 id="sec-references">References</h2>
           <ol class="ref-list">
             <li id="ref-1">
               Nick Cammarata (with contributions from Curt Tigges and Tarun Gogineni). &ldquo;<a href="https://already-clean.goodfire.com/" target="_blank" rel="noopener noreferrer">Neural Networks Are Already Clean</a>.&rdquo; <em>Goodfire</em>, 2026.
@@ -195,7 +218,7 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
             </li>
           </ol>
 
-          <h2>Cite this post</h2>
+          <h2 id="sec-cite">Cite this post</h2>
           <div class="bibtex-wrap">
             <div class="bibtex-head">
               <span>BibTeX</span>
@@ -214,6 +237,14 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
         <p class="post-navigation"><a href="/blog/">All posts</a></p>
       </article>
     </div>
+
+    <dialog class="fig-lightbox" id="figLightbox" aria-label="Enlarged figure preview">
+      <div class="fig-lightbox-bar">
+        <span id="figLightboxAlt">Figure preview</span>
+        <button type="button" class="fig-lightbox-close" id="figLightboxClose">Close (Esc)</button>
+      </div>
+      <img id="figLightboxImg" src="" alt="" />
+    </dialog>
   </main>
 
   <script>
@@ -463,5 +494,26 @@ const tags = ['Mechanistic Interpretability', 'Heuristic Rule Discovery', 'LLM E
         }, 1600);
       } catch (e) {}
     });
+
+    const dlg = document.getElementById('figLightbox');
+    const dlgImg = document.getElementById('figLightboxImg');
+    const dlgAlt = document.getElementById('figLightboxAlt');
+    const dlgClose = document.getElementById('figLightboxClose');
+    if (dlg instanceof HTMLDialogElement && dlgImg instanceof HTMLImageElement) {
+      document.querySelectorAll('.fig-box img').forEach((img) => {
+        img.addEventListener('click', () => {
+          const el = img;
+          if (!(el instanceof HTMLImageElement)) return;
+          dlgImg.src = el.src;
+          dlgImg.alt = el.alt;
+          if (dlgAlt) dlgAlt.textContent = el.alt || 'Figure preview';
+          dlg.showModal();
+        });
+      });
+      dlgClose?.addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', (ev) => {
+        if (ev.target === dlg) dlg.close();
+      });
+    }
   </script>
 </BaseLayout>

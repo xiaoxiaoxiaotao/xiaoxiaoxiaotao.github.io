@@ -493,7 +493,14 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
 }
 
 .home-hero-text .page-title {
+    margin: 0 0 0.3rem;
+}
+
+.hero-subtitle {
     margin: 0 0 0.85rem;
+    font-size: 1.02rem;
+    font-weight: 500;
+    color: var(--muted);
 }
 
 .home-hero-text .social-links {
@@ -982,6 +989,115 @@ body.nav-open .nav-toggle-bar:nth-child(3) { transform: translateY(-6px) rotate(
     display: block;
     border-radius: 8px;
     background: #ffffff;
+    cursor: zoom-in;
+    transition: filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.fig-box img:hover {
+    box-shadow: 0 2px 12px rgba(28, 36, 48, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .fig-box img {
+        filter: brightness(0.93) contrast(0.98);
+    }
+}
+
+:root[data-theme="dark"] .fig-box img {
+    filter: brightness(0.93) contrast(0.98);
+}
+
+.post-toc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.65rem;
+    padding: 0.65rem 0.9rem;
+    margin: 0 0 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 0.86rem;
+}
+
+.post-toc-label {
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.76rem;
+    margin-right: 0.2rem;
+}
+
+.post-toc a {
+    color: var(--accent-strong);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    transition: background 0.14s ease, border-color 0.14s ease;
+}
+
+.post-toc a:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+}
+
+.fig-lightbox {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 0.75rem;
+    background: var(--surface);
+    color: var(--ink);
+    max-width: min(94vw, 1280px);
+    max-height: 92vh;
+    box-shadow: var(--shadow);
+}
+
+.fig-lightbox::backdrop {
+    background: rgba(15, 19, 25, 0.76);
+    backdrop-filter: blur(2px);
+}
+
+.fig-lightbox img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(92vh - 3.5rem);
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.fig-lightbox-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.84rem;
+    color: var(--muted);
+}
+
+.fig-lightbox-close {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 0.22rem 0.65rem;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.fig-lightbox-close:hover {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    border-color: var(--accent);
 }
 
 .fig-cap {
